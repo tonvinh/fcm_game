@@ -1,0 +1,127 @@
+/*
+ * Design tokens — phong cách tham khảo fpt.vn
+ * (chỉ học bảng màu, kiểu chữ, nhịp khoảng cách, bo góc; không dùng logo/hình ảnh/nội dung)
+ *
+ * Cách dùng:  <link rel="stylesheet" href="design/tokens.css">
+ * Font:       Be Vietnam Pro (Google Fonts) — nạp trong HTML.
+ */
+
+:root {
+  /* ===== MÀU ===== */
+
+  /* Xanh thương hiệu (màu chính) */
+  --color-primary-50:  #f0f3fe;  /* nền nhạt, container */
+  --color-primary-100: #dde4fc;
+  --color-primary-200: #adc6ff;
+  --color-primary-500: #4564ed;  /* màu chính */
+  --color-primary-600: #2631cf;  /* hover */
+  --color-primary-700: #232a85;  /* active */
+  --color-primary-900: #191e67;  /* navy — header, khối nổi bật */
+
+  /* Cam nhấn (khuyến mãi, CTA phụ, điểm nhấn) */
+  --color-accent-100: #ffddc4;
+  --color-accent-200: #ffeddb;
+  --color-accent-500: #ff730a;
+  --color-accent-600: #f75501;
+
+  /* Vàng (huy hiệu, ngôi sao, kỷ lục) */
+  --color-highlight-500: #fbb83b;
+
+  /* Trạng thái */
+  --color-success-50:  #f1fdf6;
+  --color-success-500: #17ba58;
+  --color-danger-50:   #fff3f6;
+  --color-danger-500:  #ff2156;
+  --color-info-500:    #0073ff;
+
+  /* Trung tính */
+  --color-white:      #ffffff;
+  --color-gray-50:    #f7f7f8;
+  --color-gray-100:   #f3f3f3;  /* nền trang */
+  --color-gray-150:   #ececec;
+  --color-gray-200:   #e7e7e7;  /* viền nhẹ */
+  --color-gray-300:   #d1d1d1;  /* viền ô nhập */
+  --color-gray-500:   #888888;  /* chữ phụ */
+  --color-gray-600:   #77878f;
+  --color-gray-800:   #3d3d3d;  /* chữ chính */
+  --color-gray-900:   #181d27;  /* tiêu đề đậm */
+
+  /* Vai trò (dùng cái này trong component) */
+  --bg-page:          var(--color-gray-100);
+  --bg-surface:       var(--color-white);
+  --bg-subtle:        var(--color-gray-50);
+  --bg-brand:         var(--color-primary-500);
+  --bg-brand-soft:    var(--color-primary-50);
+  --bg-brand-strong:  var(--color-primary-900);
+  --text-primary:     var(--color-gray-800);
+  --text-heading:     var(--color-gray-900);
+  --text-secondary:   var(--color-gray-500);
+  --text-on-brand:    var(--color-white);
+  --text-link:        var(--color-primary-500);
+  --border-subtle:    var(--color-gray-200);
+  --border-default:   var(--color-gray-300);
+  --border-focus:     var(--color-primary-500);
+  --focus-ring:       0 0 0 3px rgba(69, 100, 237, 0.25);
+
+  /* Gradient thương hiệu (banner, nút nổi bật) */
+  --gradient-brand:  linear-gradient(135deg, #4564ed 0%, #2631cf 100%);
+  --gradient-accent: linear-gradient(135deg, #ff730a 0%, #f75501 100%);
+
+  /* ===== KIỂU CHỮ ===== */
+  --font-sans: "Be Vietnam Pro", system-ui, -apple-system, BlinkMacSystemFont,
+               "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --font-weight-regular:   400;
+  --font-weight-medium:    500;
+  --font-weight-semibold:  600;
+  --font-weight-bold:      700;
+  --font-weight-extrabold: 800;
+
+  /* ===== CỠ CHỮ (kèm line-height) ===== */
+  --text-2xs:  11px;  --leading-2xs: 16px;   /* nhãn nhỏ, badge */
+  --text-xs:   12px;  --leading-xs:  16px;
+  --text-sm:   14px;  --leading-sm:  20px;   /* thân chữ mặc định */
+  --text-md:   16px;  --leading-md:  24px;
+  --text-lg:   18px;  --leading-lg:  28px;
+  --text-xl:   20px;  --leading-xl:  28px;
+  --text-2xl:  24px;  --leading-2xl: 32px;
+  --text-3xl:  28px;  --leading-3xl: 36px;   /* tiêu đề mục */
+  --text-4xl:  36px;  --leading-4xl: 44px;
+  --text-5xl:  40px;  --leading-5xl: 48px;   /* tiêu đề lớn */
+  --text-6xl:  48px;  --leading-6xl: 56px;
+
+  /* ===== KHOẢNG CÁCH (bước 4px) ===== */
+  --space-0:   0;
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-16:  64px;
+  --space-20:  80px;
+
+  /* ===== BO GÓC ===== */
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius-md:   6px;    /* ô nhập, nút nhỏ — dùng nhiều nhất */
+  --radius-lg:   8px;    /* nút */
+  --radius-xl:   12px;   /* thẻ */
+  --radius-2xl:  16px;   /* khối lớn, modal */
+  --radius-3xl:  24px;   /* banner */
+  --radius-full: 9999px; /* nút tròn, chip, avatar */
+
+  /* ===== BÓNG ĐỔ (rất nhẹ) ===== */
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
+  --shadow-md: 0 2px 4px -4px rgba(16, 24, 40, 0.12), 0 0 8px -2px rgba(16, 24, 40, 0.12);
+  --shadow-lg: 0 8px 24px -6px rgba(16, 24, 40, 0.16);
+
+  /* ===== CHUYỂN ĐỘNG ===== */
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+}
