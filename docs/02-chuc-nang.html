@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chức năng — Đập chuột</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../design/tokens.css">
+<link rel="stylesheet" href="docs.css">
+<style>
+  .feature { background: var(--bg-surface); border-radius: var(--radius-xl); box-shadow: var(--shadow-md); padding: var(--space-5); scroll-margin-top: 80px; }
+  .feature + .feature { margin-top: var(--space-4); }
+  .feature-head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3); }
+  .feature-head .code { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-primary-600); font-weight: var(--font-weight-semibold); }
+  .feature-head h3 { font-size: var(--text-lg); line-height: var(--leading-lg); font-weight: var(--font-weight-bold); }
+  .feature-head .badges { margin-left: auto; display: flex; gap: var(--space-1); }
+  .feature dl.defs { grid-template-columns: 130px minmax(0, 1fr); font-size: var(--text-sm); }
+  .feature dl.defs ul { margin: 0; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="dot"></span>Đập chuột</a>
+    <nav class="nav" aria-label="Tài liệu">
+      <a href="index.html">Mục lục</a>
+      <a href="01-tong-quan.html">01 Tổng quan</a>
+      <a href="02-chuc-nang.html" aria-current="page">02 Chức năng</a>
+      <a href="03-man-hinh.html">03 Màn hình</a>
+      <a href="04-quy-tac-du-lieu.html">04 Quy tắc &amp; dữ liệu</a>
+      <a href="05-ke-hoach-test.html">05 Kế hoạch test</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Tài liệu 02</div>
+    <h1>Chức năng</h1>
+    <p>14 chức năng game phải có. Mỗi chức năng ghi rõ khi nào xảy ra, kết quả mong đợi và trường hợp đặc biệt.</p>
+  </div>
+</div>
+
+<main>
+<div class="layout">
+  <aside class="toc">
+    <h2>Trong trang</h2>
+    <ol>
+      <li><a href="#bang">Bảng tổng hợp</a></li>
+      <li><a href="#cn-01">CN-01 → CN-03 Vào lượt</a></li>
+      <li><a href="#cn-04">CN-04 → CN-09 Trong lượt</a></li>
+      <li><a href="#cn-10">CN-10 → CN-11 Kết thúc</a></li>
+      <li><a href="#cn-12">CN-12 → CN-14 Hệ thống</a></li>
+    </ol>
+  </aside>
+
+  <div>
+    <section id="bang">
+      <h2 class="section-title">Bảng tổng hợp</h2>
+      <p class="section-desc"><span class="badge badge-brand">Bắt buộc</span> có trong YEU-CAU.md. <span class="badge badge-accent">Bổ sung</span> thêm từ phỏng vấn.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Mã</th><th>Chức năng</th><th>Màn</th><th>Nguồn</th></tr></thead>
+          <tbody>
+            <tr><td class="id"><a href="#cn-01">CN-01</a></td><td>Hiển thị màn Bắt đầu</td><td>Bắt đầu</td><td><span class="badge badge-brand">Bắt buộc</span></td></tr>
+            <tr><td class="id"><a href="#cn-02">CN-02</a></td><td>Bắt đầu / Chơi lại một lượt</td><td>Bắt đầu, Kết quả</td><td><span class="badge badge-brand">Bắt buộc</span></td></tr>
+            <tr><td class="id"><a href="#cn-03">CN-03</a></td><td>Đếm ngược 3-2-1</td><td>Đang chơi</td><td><span class="badge badge-accent">Bổ sung</span></td></tr>
+            <tr><td class="id"><a href="#cn-04">CN-04</a></td><td>Cho chuột xuất hiện</td><td>Đang chơi</td><td><span class="badge badge-brand">Bắt buộc</span></td></tr>
+            <tr><td class="id"><a href="#cn-05">CN-05</a></td><td>Nhận thao tác bấm / chạm</td><td>Đang chơi</td><td><span class="badge badge-brand">Bắt buộc</span></td></tr>
+            <tr><td class="id"><a href="#cn-06">CN-06</a></td><td>Tính điểm và thống kê</td><td>Đang chơi</td><td><span class="badge badge-brand">Bắt buộc</span></td></tr>
+            <tr><td class="id"><a href="#cn-07">CN-07</a></td><td>Đồng hồ 30 giây</td><td>Đang chơi</td><td><span class="badge badge-brand">Bắt buộc</span></td></tr>
+            <tr><td class="id"><a href="#cn-08">CN-08</a></td><td>Thanh thông tin (Điểm · Thời gian · Kỷ lục)</td><td>Đang chơi</td><td><span class="badge badge-brand">Bắt buộc</span></td></tr>
+            <tr><td class="id"><a href="#cn-09">CN-09</a></td><td>Phản hồi trúng / trượt</td><td>Đang chơi</td><td><span class="badge badge-brand">Bắt buộc</span></td></tr>
+            <tr><td class="id"><a href="#cn-10">CN-10</a></td><td>Kết thúc lượt và màn Kết quả</td><td>Kết quả</td><td><span class="badge badge-brand">Bắt buộc</span></td></tr>
+            <tr><td class="id"><a href="#cn-11">CN-11</a></td><td>Tự quay về màn Bắt đầu sau 20 giây</td><td>Kết quả</td><td><span class="badge badge-accent">Bổ sung</span></td></tr>
+            <tr><td class="id"><a href="#cn-12">CN-12</a></td><td>Xoá kỷ lục bằng thao tác ẩn</td><td>Bắt đầu</td><td><span class="badge badge-accent">Bổ sung</span></td></tr>
+            <tr><td class="id"><a href="#cn-13">CN-13</a></td><td>Lưu và đọc kỷ lục</td><td>Tất cả</td><td><span class="badge badge-brand">Bắt buộc</span></td></tr>
+            <tr><td class="id"><a href="#cn-14">CN-14</a></td><td>Bố cục co giãn, chạm không trễ / không phóng to</td><td>Tất cả</td><td><span class="badge badge-brand">Bắt buộc</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Vào lượt</h2>
+
+      <article class="feature" id="cn-01">
+        <div class="feature-head"><span class="code">CN-01</span><h3>Hiển thị màn Bắt đầu</h3><span class="badges"><span class="badge badge-brand">Bắt buộc</span></span></div>
+        <dl class="defs">
+          <dt>Khi nào</dt><dd>Mở game; hoặc tự quay về từ màn Kết quả (CN-11).</dd>
+          <dt>Hiển thị</dt><dd>Tên game “Đập chuột”; luật tóm tắt: <em>“Đập trúng chuột để ghi điểm. Bạn có 30 giây — chuột chạy nhanh dần!”</em>; khối Kỷ lục với giá trị hiện tại; nút <strong>Bắt đầu</strong>.</dd>
+          <dt>Kỷ lục</dt><dd>Chưa có kỷ lục hoặc không đọc được lưu trữ → hiện <strong>0</strong>.</dd>
+          <dt>Liên quan</dt><dd>MH-01, CN-12, CN-13</dd>
+        </dl>
+      </article>
+
+      <article class="feature" id="cn-02">
+        <div class="feature-head"><span class="code">CN-02</span><h3>Bắt đầu / Chơi lại một lượt</h3><span class="badges"><span class="badge badge-brand">Bắt buộc</span></span></div>
+        <dl class="defs">
+          <dt>Khi nào</dt><dd>Bấm <strong>Bắt đầu</strong> (màn Bắt đầu) hoặc <strong>Chơi lại</strong> (màn Kết quả).</dd>
+          <dt>Kết quả</dt>
+          <dd>
+            <ul>
+              <li>Đặt lại: điểm = 0, trúng = trượt = lỡ = 0, thời gian = 30, không có ô “vừa hiện”.</li>
+              <li>Chuyển sang màn Đang chơi và chạy đếm 3-2-1 (CN-03).</li>
+              <li>Huỷ hẹn giờ tự quay về (CN-11) nếu đang chạy.</li>
+            </ul>
+          </dd>
+          <dt>Ngoại lệ</dt><dd>Bấm nút nhiều lần liên tiếp chỉ bắt đầu <strong>một</strong> lượt; nút bị vô hiệu ngay sau lần bấm đầu.</dd>
+          <dt>Liên quan</dt><dd>QT-01, QT-08</dd>
+        </dl>
+      </article>
+
+      <article class="feature" id="cn-03">
+        <div class="feature-head"><span class="code">CN-03</span><h3>Đếm ngược 3-2-1</h3><span class="badges"><span class="badge badge-accent">Bổ sung</span></span></div>
+        <dl class="defs">
+          <dt>Khi nào</dt><dd>Ngay sau CN-02.</dd>
+          <dt>Kết quả</dt>
+          <dd>
+            <ul>
+              <li>Lưới 3×3 trống, phủ lớp mờ với số lớn <strong>3 → 2 → 1</strong>, mỗi số 1 giây (tổng 3 giây).</li>
+              <li>Thanh thông tin hiện Điểm 0 · Thời gian 30 · Kỷ lục; đồng hồ đứng yên.</li>
+              <li>Hết số 1 → bỏ lớp phủ, đồng hồ 30 giây bắt đầu chạy và con chuột đầu tiên hiện ngay.</li>
+            </ul>
+          </dd>
+          <dt>Ngoại lệ</dt><dd>Bấm vào lưới trong lúc đếm: không tính gì (không trúng, không trượt).</dd>
+          <dt>Liên quan</dt><dd>MH-02a, QT-08</dd>
+        </dl>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title" id="cn-04-title">Trong lượt</h2>
+
+      <article class="feature" id="cn-04">
+        <div class="feature-head"><span class="code">CN-04</span><h3>Cho chuột xuất hiện</h3><span class="badges"><span class="badge badge-brand">Bắt buộc</span></span></div>
+        <dl class="defs">
+          <dt>Khi nào</dt><dd>Đầu lượt; sau khi con trước biến mất (bị đập hoặc hết thời gian hiện).</dd>
+          <dt>Kết quả</dt>
+          <dd>
+            <ul>
+              <li>Luôn chỉ <strong>1</strong> con trên lưới.</li>
+              <li>Chọn ngẫu nhiên đều 1 trong 8 ô còn lại (khác ô vừa hiện ngay trước). Con đầu lượt chọn trong cả 9 ô.</li>
+              <li>Thời gian hiện tính theo công thức QT-02: 1,2 giây đầu lượt → 0,6 giây cuối lượt.</li>
+              <li>Khoảng nghỉ giữa hai con ≤ 0,2 giây (QT-04).</li>
+            </ul>
+          </dd>
+          <dt>Ngoại lệ</dt><dd>Không cho chuột mới xuất hiện khi thời gian còn lại = 0.</dd>
+          <dt>Liên quan</dt><dd>QT-02, QT-03, QT-04</dd>
+        </dl>
+      </article>
+
+      <article class="feature" id="cn-05">
+        <div class="feature-head"><span class="code">CN-05</span><h3>Nhận thao tác bấm / chạm</h3><span class="badges"><span class="badge badge-brand">Bắt buộc</span></span></div>
+        <dl class="defs">
+          <dt>Khi nào</dt><dd>Người chơi bấm chuột hoặc chạm vào một ô.</dd>
+          <dt>Kết quả</dt>
+          <dd>
+            <ul>
+              <li>Ghi nhận ngay lúc nhấn xuống (không đợi nhả tay) để không bị trễ.</li>
+              <li>Nhận cả chuột, chạm và bút; chạm nhiều ngón cùng lúc thì mỗi ngón là một lần bấm riêng.</li>
+              <li>Phân loại thành Trúng / Trượt / Bỏ qua theo bảng QT-03.</li>
+            </ul>
+          </dd>
+          <dt>Ngoại lệ</dt><dd>Ngoài trạng thái “Đang chơi” (đếm ngược, hết giờ, màn khác): bỏ qua mọi lần bấm vào lưới.</dd>
+          <dt>Liên quan</dt><dd>QT-03, CN-14</dd>
+        </dl>
+      </article>
+
+      <article class="feature" id="cn-06">
+        <div class="feature-head"><span class="code">CN-06</span><h3>Tính điểm và thống kê</h3><span class="badges"><span class="badge badge-brand">Bắt buộc</span></span></div>
+        <dl class="defs">
+          <dt>Kết quả</dt>
+          <dd>
+            <ul>
+              <li>Trúng: điểm +1, trúng +1. Mỗi con chỉ tính <strong>một lần</strong>.</li>
+              <li>Trượt: trượt +1, điểm giữ nguyên (không trừ).</li>
+              <li>Chuột tự biến mất: lỡ +1.</li>
+              <li>Luôn đúng: <code>điểm = trúng</code>; <code>trúng + lỡ ≤ số lần hiện</code>.</li>
+            </ul>
+          </dd>
+          <dt>Liên quan</dt><dd>QT-03, QT-05</dd>
+        </dl>
+      </article>
+
+      <article class="feature" id="cn-07">
+        <div class="feature-head"><span class="code">CN-07</span><h3>Đồng hồ 30 giây</h3><span class="badges"><span class="badge badge-brand">Bắt buộc</span></span></div>
+        <dl class="defs">
+          <dt>Kết quả</dt>
+          <dd>
+            <ul>
+              <li>Đếm ngược từ 30 về 0, hiển thị số giây nguyên làm tròn lên (30, 29, …, 1, 0).</li>
+              <li>Tính theo đồng hồ thật của máy, không cộng dồn từng nhịp, để sai số ≤ 0,5 giây sau 30 giây.</li>
+              <li>Còn ≤ 5 giây: chữ đồng hồ đổi sang đỏ <code>--color-danger-500</code>.</li>
+              <li>Về 0: kết thúc lượt ngay (CN-10).</li>
+            </ul>
+          </dd>
+          <dt>Liên quan</dt><dd>QT-01, QT-09</dd>
+        </dl>
+      </article>
+
+      <article class="feature" id="cn-08">
+        <div class="feature-head"><span class="code">CN-08</span><h3>Thanh thông tin</h3><span class="badges"><span class="badge badge-brand">Bắt buộc</span></span></div>
+        <dl class="defs">
+          <dt>Hiển thị</dt><dd>Ba cột: <strong>Điểm</strong> · <strong>Thời gian</strong> (giây) · <strong>Kỷ lục</strong>. Điểm cập nhật ngay khi trúng.</dd>
+          <dt>Kỷ lục</dt><dd>Hiện kỷ lục đã lưu lúc bắt đầu lượt; không đổi trong lượt kể cả khi điểm đang vượt (để màn Kết quả có khoảnh khắc “Kỷ lục mới!”).</dd>
+          <dt>Liên quan</dt><dd>MH-02</dd>
+        </dl>
+      </article>
+
+      <article class="feature" id="cn-09">
+        <div class="feature-head"><span class="code">CN-09</span><h3>Phản hồi trúng / trượt</h3><span class="badges"><span class="badge badge-brand">Bắt buộc</span></span></div>
+        <dl class="defs">
+          <dt>Trúng</dt><dd>Chuột đổi sang hình “bị đập” trong 0,2 giây, hiện chữ “+1” màu xanh lá bay lên rồi mờ dần ở ô đó.</dd>
+          <dt>Trượt</dt><dd>Ô rung ngang nhẹ và chớp nền đỏ nhạt khoảng 0,2 giây.</dd>
+          <dt>Lỡ</dt><dd>Chuột thụt xuống hang, không có hiệu ứng riêng.</dd>
+          <dt>Ngoại lệ</dt><dd>Hiệu ứng không được chặn thao tác ở ô khác; hiệu ứng đang chạy lúc hết giờ được cắt ngay.</dd>
+          <dt>Liên quan</dt><dd>MH-02, mục 4 tài liệu 03</dd>
+        </dl>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title" id="cn-10-title">Kết thúc</h2>
+
+      <article class="feature" id="cn-10">
+        <div class="feature-head"><span class="code">CN-10</span><h3>Kết thúc lượt và màn Kết quả</h3><span class="badges"><span class="badge badge-brand">Bắt buộc</span></span></div>
+        <dl class="defs">
+          <dt>Khi nào</dt><dd>Đồng hồ về 0.</dd>
+          <dt>Kết quả</dt>
+          <dd>
+            <ul>
+              <li>Cùng lúc: chuột biến mất, khoá mọi thao tác trên lưới, dừng mọi hẹn giờ của lượt.</li>
+              <li>So điểm với kỷ lục; cao hơn thì lưu kỷ lục mới (CN-13).</li>
+              <li>Chuyển sang màn Kết quả: điểm lượt này, số trúng / trượt / lỡ, kỷ lục; dòng <strong>“Kỷ lục mới!”</strong> nếu vừa phá kỷ lục.</li>
+              <li>Nút <strong>Chơi lại</strong>.</li>
+            </ul>
+          </dd>
+          <dt>Liên quan</dt><dd>MH-03, QT-05, QT-07</dd>
+        </dl>
+      </article>
+
+      <article class="feature" id="cn-11">
+        <div class="feature-head"><span class="code">CN-11</span><h3>Tự quay về màn Bắt đầu sau 20 giây</h3><span class="badges"><span class="badge badge-accent">Bổ sung</span></span></div>
+        <dl class="defs">
+          <dt>Khi nào</dt><dd>Màn Kết quả hiện mà không có thao tác nào trong 20 giây.</dd>
+          <dt>Kết quả</dt>
+          <dd>
+            <ul>
+              <li>Dòng nhỏ dưới nút: “Tự về màn đầu sau <strong>N</strong> giây”, N đếm từ 20 về 1.</li>
+              <li>Về 0 → hiện màn Bắt đầu (CN-01).</li>
+              <li>Chạm/bấm/di chuột bất kỳ đâu trên màn Kết quả → đếm lại từ 20.</li>
+              <li>Bấm Chơi lại → huỷ đếm.</li>
+            </ul>
+          </dd>
+          <dt>Liên quan</dt><dd>QT-08</dd>
+        </dl>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title" id="cn-12-title">Hệ thống</h2>
+
+      <article class="feature" id="cn-12">
+        <div class="feature-head"><span class="code">CN-12</span><h3>Xoá kỷ lục bằng thao tác ẩn</h3><span class="badges"><span class="badge badge-accent">Bổ sung</span></span></div>
+        <dl class="defs">
+          <dt>Khi nào</dt><dd>Nhân viên <strong>nhấn giữ 3 giây</strong> vào khối Kỷ lục ở màn Bắt đầu.</dd>
+          <dt>Kết quả</dt>
+          <dd>
+            <ul>
+              <li>Trong lúc giữ: không có gợi ý nào (khách không phát hiện). Nhả tay trước 3 giây → không có gì xảy ra.</li>
+              <li>Đủ 3 giây → hộp xác nhận: “Xoá kỷ lục hiện tại (<strong>N</strong> điểm)?” với hai nút <strong>Huỷ</strong> và <strong>Xoá</strong>.</li>
+              <li>Xoá → xoá giá trị đã lưu, khối Kỷ lục hiện 0. Huỷ hoặc bấm ra ngoài hộp → đóng hộp, giữ nguyên.</li>
+            </ul>
+          </dd>
+          <dt>Ngoại lệ</dt><dd>Kỷ lục đang là 0 → vẫn mở hộp; Xoá không đổi gì. Lưu trữ bị chặn → xoá giá trị trong bộ nhớ của trang, không báo lỗi. Giữ tay không làm trình duyệt hiện menu ngữ cảnh / chọn chữ.</dd>
+          <dt>Liên quan</dt><dd>MH-01b, QT-06</dd>
+        </dl>
+      </article>
+
+      <article class="feature" id="cn-13">
+        <div class="feature-head"><span class="code">CN-13</span><h3>Lưu và đọc kỷ lục</h3><span class="badges"><span class="badge badge-brand">Bắt buộc</span></span></div>
+        <dl class="defs">
+          <dt>Kết quả</dt>
+          <dd>
+            <ul>
+              <li>Đọc một lần khi mở game. Ghi khi kết thúc lượt có điểm cao hơn kỷ lục; xoá khi CN-12.</li>
+              <li>Kỷ lục giữ nguyên sau khi tải lại trang, đóng mở trình duyệt.</li>
+              <li>Lưu trữ bị chặn hoặc lỗi (chế độ riêng tư, hết dung lượng) → giữ kỷ lục trong bộ nhớ trang cho tới khi tải lại; không hiện lỗi, không có lỗi trong Console.</li>
+            </ul>
+          </dd>
+          <dt>Liên quan</dt><dd>QT-06, QT-07, DL-02</dd>
+        </dl>
+      </article>
+
+      <article class="feature" id="cn-14">
+        <div class="feature-head"><span class="code">CN-14</span><h3>Bố cục co giãn, chạm không trễ</h3><span class="badges"><span class="badge badge-brand">Bắt buộc</span></span></div>
+        <dl class="defs">
+          <dt>Kết quả</dt>
+          <dd>
+            <ul>
+              <li>Lưới luôn vuông, co theo cạnh nhỏ hơn của vùng còn trống; vừa khít màn dọc từ 320px, không cuộn.</li>
+              <li>Chạm không có độ trễ, không phóng to khi chạm đúp, không chọn chữ, không kéo trang.</li>
+              <li>Ô có vùng bấm tối thiểu 80×80px trên màn 320px.</li>
+            </ul>
+          </dd>
+          <dt>Liên quan</dt><dd>Mục 6 tài liệu 03</dd>
+        </dl>
+      </article>
+    </section>
+
+    <nav class="pager">
+      <a href="01-tong-quan.html"><small>← Trước</small><span>01 Tổng quan</span></a>
+      <a class="next" href="03-man-hinh.html"><small>Tiếp →</small><span>03 Màn hình</span></a>
+    </nav>
+  </div>
+</div>
+</main>
+
+<footer class="foot">Tài liệu thiết kế Đập chuột · 02 Chức năng</footer>
+</body>
+</html>

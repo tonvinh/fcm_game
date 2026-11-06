@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Đập chuột — Tài liệu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../design/tokens.css">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="dot"></span>Đập chuột</a>
+    <nav class="nav" aria-label="Tài liệu">
+      <a href="index.html" aria-current="page">Mục lục</a>
+      <a href="01-tong-quan.html">01 Tổng quan</a>
+      <a href="02-chuc-nang.html">02 Chức năng</a>
+      <a href="03-man-hinh.html">03 Màn hình</a>
+      <a href="04-quy-tac-du-lieu.html">04 Quy tắc &amp; dữ liệu</a>
+      <a href="05-ke-hoach-test.html">05 Kế hoạch test</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Bộ tài liệu thiết kế · v1.0</div>
+    <h1>Mini game Đập chuột</h1>
+    <p>Game bấm chuột 30 giây chạy trên trình duyệt, dùng tại gian hàng sự kiện. Bộ tài liệu này mô tả đầy đủ những gì cần xây trước khi viết dòng code đầu tiên.</p>
+    <div class="meta">
+      <span>Nguồn: YEU-CAU.md + 5 câu phỏng vấn</span>
+      <span>Cập nhật: 06/11/2026</span>
+      <span>Trạng thái: Chờ duyệt</span>
+    </div>
+  </div>
+</div>
+
+<main>
+  <section>
+    <h2 class="section-title">Mục lục</h2>
+    <p class="section-desc">Đọc theo thứ tự từ 01 đến 05. Mỗi tài liệu có mã định danh (CN-, MH-, QT-, TC-) để tham chiếu chéo.</p>
+    <div class="cards">
+      <a class="card" href="01-tong-quan.html">
+        <span class="num">01</span>
+        <h3>Tổng quan</h3>
+        <p>Mục tiêu, người chơi, bối cảnh gian hàng, phạm vi, ràng buộc kỹ thuật và các quyết định đã chốt.</p>
+        <span class="more">Đọc →</span>
+      </a>
+      <a class="card" href="02-chuc-nang.html">
+        <span class="num">02</span>
+        <h3>Chức năng</h3>
+        <p>Danh sách chức năng CN-01 → CN-14, mỗi chức năng có mô tả, điều kiện và độ ưu tiên.</p>
+        <span class="more">Đọc →</span>
+      </a>
+      <a class="card" href="03-man-hinh.html">
+        <span class="num">03</span>
+        <h3>Màn hình</h3>
+        <p>Luồng màn hình, phác thảo từng màn, phản hồi khi chơi, bố cục trên điện thoại và máy tính.</p>
+        <span class="more">Đọc →</span>
+      </a>
+      <a class="card" href="04-quy-tac-du-lieu.html">
+        <span class="num">04</span>
+        <h3>Quy tắc &amp; dữ liệu</h3>
+        <p>Công thức thời gian, quy tắc tính điểm, máy trạng thái, dữ liệu lượt chơi và cách lưu kỷ lục.</p>
+        <span class="more">Đọc →</span>
+      </a>
+      <a class="card" href="05-ke-hoach-test.html">
+        <span class="num">05</span>
+        <h3>Kế hoạch test</h3>
+        <p>Thiết bị test, ca kiểm thử TC-01 → TC-30 gắn với 11 tiêu chí hoàn thành và tiêu chí nghiệm thu.</p>
+        <span class="more">Đọc →</span>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Kết quả phỏng vấn</h2>
+    <p class="section-desc">5 câu hỏi làm rõ những điểm YEU-CAU.md chưa nói. Các câu trả lời này đã được đưa vào tài liệu.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Câu hỏi</th><th>Trả lời</th><th>Ảnh hưởng tới</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Game dành cho ai, dùng ở đâu?</td><td><strong>Khách tại sự kiện / gian hàng</strong></td><td>Chữ to, hiểu ngay không cần hướng dẫn; nhiều người chơi chung một máy</td></tr>
+          <tr><td>2</td><td>Chuột và ô lưới trông thế nào?</td><td><strong>SVG vẽ sẵn</strong>, nhúng trong file</td><td>Hình đồng nhất mọi máy, màu theo tokens.css, không cần tải ảnh</td></tr>
+          <tr><td>3</td><td>Có cần xoá kỷ lục không?</td><td><strong>Có, bằng thao tác ẩn</strong></td><td>Nhấn giữ 3 giây vào khối Kỷ lục ở màn Bắt đầu → hộp xác nhận (CN-12)</td></tr>
+          <tr><td>4</td><td>Có thời gian chuẩn bị trước lượt?</td><td><strong>Đếm 3-2-1</strong></td><td>3 giây đếm ngược trước 30 giây chơi; bấm lúc đếm không tính (CN-03)</td></tr>
+          <tr><td>5</td><td>Màn Kết quả có tự quay về không?</td><td><strong>Sau 20 giây</strong> không ai chạm</td><td>Tự về màn Bắt đầu cho khách kế tiếp (CN-11)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Tóm tắt một dòng</h2>
+    <div class="panel">
+      <p>Bấm <strong>Bắt đầu</strong> → đếm <strong>3-2-1</strong> → <strong>30 giây</strong> đập chuột trên lưới <strong>3×3</strong> (chuột hiện 1,2 giây rồi nhanh dần còn 0,6 giây) → màn <strong>Kết quả</strong> với điểm, trúng / trượt / lỡ và kỷ lục → <strong>Chơi lại</strong> hoặc tự về màn đầu sau 20 giây.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">Tài liệu thiết kế — chưa có code game. Giao diện theo <code>design/tokens.css</code>.</footer>
+</body>
+</html>

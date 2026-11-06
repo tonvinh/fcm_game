@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tổng quan — Đập chuột</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../design/tokens.css">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="dot"></span>Đập chuột</a>
+    <nav class="nav" aria-label="Tài liệu">
+      <a href="index.html">Mục lục</a>
+      <a href="01-tong-quan.html" aria-current="page">01 Tổng quan</a>
+      <a href="02-chuc-nang.html">02 Chức năng</a>
+      <a href="03-man-hinh.html">03 Màn hình</a>
+      <a href="04-quy-tac-du-lieu.html">04 Quy tắc &amp; dữ liệu</a>
+      <a href="05-ke-hoach-test.html">05 Kế hoạch test</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Tài liệu 01</div>
+    <h1>Tổng quan</h1>
+    <p>Game là gì, cho ai, chạy ở đâu, làm gì và không làm gì.</p>
+  </div>
+</div>
+
+<main>
+<div class="layout">
+  <aside class="toc">
+    <h2>Trong trang</h2>
+    <ol>
+      <li><a href="#muc-tieu">1. Mục tiêu</a></li>
+      <li><a href="#nguoi-choi">2. Người chơi &amp; bối cảnh</a></li>
+      <li><a href="#mot-luot">3. Một lượt chơi</a></li>
+      <li><a href="#pham-vi">4. Phạm vi</a></li>
+      <li><a href="#ky-thuat">5. Ràng buộc kỹ thuật</a></li>
+      <li><a href="#quyet-dinh">6. Quyết định &amp; giả định</a></li>
+      <li><a href="#thuat-ngu">7. Thuật ngữ</a></li>
+    </ol>
+  </aside>
+
+  <div>
+    <section id="muc-tieu">
+      <h2 class="section-title">1. Mục tiêu</h2>
+      <div class="panel">
+        <p>Một mini game <strong>đập chuột</strong> chơi trong <strong>30 giây</strong>, đặt tại gian hàng sự kiện để thu hút khách ghé lại. Khách đến, bấm một nút là chơi được, không cần đăng ký hay hướng dẫn. Kỷ lục trên máy tạo động lực để khách sau cố vượt khách trước.</p>
+        <div class="stat-row" style="margin-top: var(--space-4);">
+          <div class="stat"><div class="value">≤ 5 giây</div><div class="label">Từ lúc thấy màn hình đến lúc bắt đầu chơi</div></div>
+          <div class="stat"><div class="value">~35 giây</div><div class="label">Một lượt: 3 giây đếm + 30 giây chơi</div></div>
+          <div class="stat"><div class="value">0</div><div class="label">Máy chủ, tài khoản, thư viện ngoài</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="nguoi-choi">
+      <h2 class="section-title">2. Người chơi &amp; bối cảnh</h2>
+      <p class="section-desc">Kết quả câu phỏng vấn 1: game dùng tại sự kiện / gian hàng.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Vai trò</th><th>Mô tả</th><th>Cần gì</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="nowrap"><span class="badge badge-brand">Khách chơi</span></td>
+              <td>Người qua đường ở gian hàng, mọi lứa tuổi, chơi một hoặc vài lượt rồi đi. Thường đứng, chạm bằng ngón tay trên máy tính bảng/điện thoại, hoặc bấm chuột trên laptop.</td>
+              <td>Hiểu luật trong 1–2 dòng; nút to; phản hồi rõ khi trúng/trượt; thấy ngay mình có phá kỷ lục không.</td>
+            </tr>
+            <tr>
+              <td class="nowrap"><span class="badge badge-accent">Nhân viên gian hàng</span></td>
+              <td>Người đặt máy, mở game, trông máy trong ngày.</td>
+              <td>Mở file là chạy; game tự quay về màn đầu khi khách bỏ đi; xoá được kỷ lục (ví dụ đầu mỗi ngày) mà khách không bấm nhầm.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout accent">
+        <div>
+          <strong>Hệ quả của bối cảnh gian hàng</strong>
+          <p>Nhiều khách dùng chung một máy, nên “kỷ lục” là kỷ lục của máy đó, không phải của từng người. Mạng tại sự kiện có thể yếu hoặc không có, nên game phải chạy hoàn toàn không cần mạng.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="mot-luot">
+      <h2 class="section-title">3. Một lượt chơi</h2>
+      <div class="panel">
+        <ol>
+          <li>Màn <strong>Bắt đầu</strong>: tên game, luật tóm tắt, kỷ lục hiện tại. Khách bấm <strong>Bắt đầu</strong>.</li>
+          <li>Lưới 3×3 hiện ra, đếm <strong>3 → 2 → 1</strong> phủ lên lưới (3 giây). Chưa có chuột, bấm không tính.</li>
+          <li><strong>30 giây</strong> chơi: mỗi lúc một con chuột hiện ở một ô ngẫu nhiên, lúc đầu đứng 1,2 giây, càng về cuối càng nhanh, còn 0,6 giây. Bấm trúng +1 điểm.</li>
+          <li>Còn ≤ 5 giây: đồng hồ chuyển đỏ.</li>
+          <li>Hết giờ: chuột biến mất, khoá bấm, chuyển sang màn <strong>Kết quả</strong> (điểm, trúng, trượt, lỡ, kỷ lục, “Kỷ lục mới!” nếu có).</li>
+          <li>Khách bấm <strong>Chơi lại</strong> → quay lại bước 2. Không ai chạm trong 20 giây → tự về màn Bắt đầu.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="pham-vi">
+      <h2 class="section-title">4. Phạm vi</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th style="width:50%">Trong phạm vi</th><th>Ngoài phạm vi</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>
+                <ul>
+                  <li>3 màn: Bắt đầu, Đang chơi (có đếm 3-2-1), Kết quả</li>
+                  <li>Lưới 3×3, 1 chuột mỗi lúc, nhanh dần</li>
+                  <li>Điểm, trúng, trượt, lỡ</li>
+                  <li>Kỷ lục lưu trong trình duyệt (localStorage)</li>
+                  <li>Xoá kỷ lục bằng thao tác ẩn</li>
+                  <li>Tự về màn Bắt đầu sau 20 giây ở màn Kết quả</li>
+                  <li>Phản hồi hình ảnh: chuột bị đập, “+1”, ô rung khi trượt, đồng hồ đỏ</li>
+                  <li>Chuột và chạm; máy tính, máy tính bảng, điện thoại màn dọc từ 320px</li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>Âm thanh</li>
+                  <li>Nhiều người chơi cùng lúc</li>
+                  <li>Bảng xếp hạng online, nhập tên người chơi</li>
+                  <li>Nhiều loại chuột, vật cản, vật phẩm</li>
+                  <li>Tạm dừng giữa lượt</li>
+                  <li>Cấp độ khó, chỉnh thời gian lượt</li>
+                  <li>Đa ngôn ngữ (chỉ tiếng Việt)</li>
+                  <li>Chế độ tối</li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="ky-thuat">
+      <h2 class="section-title">5. Ràng buộc kỹ thuật</h2>
+      <div class="panel">
+        <dl class="defs">
+          <dt>Đóng gói</dt>
+          <dd>Một file duy nhất <code>game/index.html</code>, chứa HTML, CSS và JavaScript. Các biến cần dùng trong <code>design/tokens.css</code> được chép vào thẻ <code>&lt;style&gt;</code> để file chạy độc lập khi chép sang máy khác.</dd>
+          <dt>Mở game</dt>
+          <dd>Mở file trực tiếp (<code>file://</code>) hoặc qua bất kỳ máy chủ tĩnh nào. Không cần cài đặt.</dd>
+          <dt>Công nghệ</dt>
+          <dd>HTML/CSS/JavaScript thuần, không thư viện, không bước build.</dd>
+          <dt>Mạng</dt>
+          <dd>Không cần mạng. Font Be Vietnam Pro nạp từ Google Fonts nếu có mạng; mất mạng thì dùng font hệ thống trong <code>--font-sans</code>, game vẫn chạy.</dd>
+          <dt>Hình ảnh</dt>
+          <dd>Chuột, chuột bị đập và hang vẽ bằng SVG nhúng trong file (câu phỏng vấn 2).</dd>
+          <dt>Trình duyệt</dt>
+          <dd>Chrome (máy tính, Android) và Safari (macOS, iOS), bản phát hành trong 2 năm gần nhất.</dd>
+          <dt>Thiết bị</dt>
+          <dd>Màn rộng từ 320px. Điện thoại dùng màn dọc. Nhập bằng chuột và chạm.</dd>
+          <dt>Lưu trữ</dt>
+          <dd>Chỉ <code>localStorage</code>, chỉ một giá trị (kỷ lục). Bị chặn thì game vẫn chạy.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section id="quyet-dinh">
+      <h2 class="section-title">6. Quyết định &amp; giả định</h2>
+      <p class="section-desc">Các điểm YEU-CAU.md chưa nói rõ. <span class="badge badge-success">Đã chốt</span> là từ phỏng vấn; <span class="badge badge-gray">Giả định</span> là đề xuất của tài liệu, cần người duyệt xác nhận.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Mã</th><th>Nội dung</th><th>Loại</th><th>Chi tiết</th></tr></thead>
+          <tbody>
+            <tr><td class="id">QD-01</td><td>Đếm 3-2-1 trước mỗi lượt</td><td><span class="badge badge-success">Đã chốt</span></td><td>CN-03</td></tr>
+            <tr><td class="id">QD-02</td><td>Xoá kỷ lục bằng nhấn giữ 3 giây + xác nhận</td><td><span class="badge badge-success">Đã chốt</span></td><td>CN-12</td></tr>
+            <tr><td class="id">QD-03</td><td>Màn Kết quả tự về màn Bắt đầu sau 20 giây</td><td><span class="badge badge-success">Đã chốt</span></td><td>CN-11</td></tr>
+            <tr><td class="id">QD-04</td><td>Hình vẽ bằng SVG nhúng</td><td><span class="badge badge-success">Đã chốt</span></td><td>03 — mục 5</td></tr>
+            <tr><td class="id">QD-05</td><td>Bằng kỷ lục không tính là “Kỷ lục mới”, phải cao hơn hẳn</td><td><span class="badge badge-gray">Giả định</span></td><td>QT-07</td></tr>
+            <tr><td class="id">QD-06</td><td>Chuột đang hiện lúc hết giờ: biến mất, <strong>không</strong> tính là lỡ</td><td><span class="badge badge-gray">Giả định</span></td><td>QT-05</td></tr>
+            <tr><td class="id">QD-07</td><td>Trong 0,2 giây chuột “bị đập”, bấm vào ô đó không tính gì; con kế tiếp hiện ngay sau hiệu ứng</td><td><span class="badge badge-gray">Giả định</span></td><td>QT-03, QT-04</td></tr>
+            <tr><td class="id">QD-08</td><td>Chuyển tab / khoá màn hình giữa lượt: đồng hồ vẫn chạy theo giờ thật; quay lại mà đã hết giờ thì vào thẳng màn Kết quả</td><td><span class="badge badge-gray">Giả định</span></td><td>QT-09</td></tr>
+            <tr><td class="id">QD-09</td><td>Ghi nhận bấm ngay khi ngón tay/chuột chạm xuống (không đợi nhả ra)</td><td><span class="badge badge-gray">Giả định</span></td><td>CN-05</td></tr>
+            <tr><td class="id">QD-10</td><td>Mở game với <code>?log=1</code> thì ghi sự kiện lượt vào Console để đo khi test; mặc định tắt</td><td><span class="badge badge-gray">Giả định</span></td><td>05 — mục 3</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="thuat-ngu">
+      <h2 class="section-title">7. Thuật ngữ</h2>
+      <div class="panel">
+        <dl class="defs">
+          <dt>Lượt</dt><dd>30 giây chơi, tính từ lúc đếm 3-2-1 kết thúc.</dd>
+          <dt>Lần hiện</dt><dd>Một con chuột xuất hiện ở một ô, kết thúc khi bị đập hoặc hết thời gian hiện.</dd>
+          <dt>Thời gian hiện</dt><dd>Số giây một con chuột đứng trên ô nếu không bị đập (1,2 → 0,6 giây).</dd>
+          <dt>Trúng</dt><dd>Bấm vào ô đang có chuột chưa bị đập. +1 điểm.</dd>
+          <dt>Trượt</dt><dd>Bấm vào ô trống trong lúc đang chơi. Không trừ điểm.</dd>
+          <dt>Lỡ</dt><dd>Chuột tự biến mất vì hết thời gian hiện mà không bị đập.</dd>
+          <dt>Kỷ lục</dt><dd>Điểm cao nhất từng đạt trên trình duyệt của máy này.</dd>
+          <dt>Thao tác ẩn</dt><dd>Thao tác không có nút hiển thị, chỉ nhân viên biết (nhấn giữ 3 giây).</dd>
+        </dl>
+      </div>
+    </section>
+
+    <nav class="pager">
+      <a href="index.html"><small>← Trước</small><span>Mục lục</span></a>
+      <a class="next" href="02-chuc-nang.html"><small>Tiếp →</small><span>02 Chức năng</span></a>
+    </nav>
+  </div>
+</div>
+</main>
+
+<footer class="foot">Tài liệu thiết kế Đập chuột · 01 Tổng quan</footer>
+</body>
+</html>

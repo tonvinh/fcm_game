@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quy tắc &amp; dữ liệu — Đập chuột</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../design/tokens.css">
+<link rel="stylesheet" href="docs.css">
+<style>
+  .rule-id { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-primary-600); font-weight: var(--font-weight-semibold); margin-right: var(--space-2); }
+  .chart { width: 100%; max-width: 560px; height: auto; display: block; }
+  .chart .axis { stroke: var(--border-default); stroke-width: 1; }
+  .chart .grid { stroke: var(--border-subtle); stroke-width: 1; }
+  .chart .line { stroke: var(--color-primary-500); stroke-width: 3; fill: none; }
+  .chart .dot { fill: var(--color-primary-500); }
+  .chart text { font-family: var(--font-sans); font-size: 12px; fill: var(--text-secondary); }
+  .chart .lbl { fill: var(--text-heading); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="dot"></span>Đập chuột</a>
+    <nav class="nav" aria-label="Tài liệu">
+      <a href="index.html">Mục lục</a>
+      <a href="01-tong-quan.html">01 Tổng quan</a>
+      <a href="02-chuc-nang.html">02 Chức năng</a>
+      <a href="03-man-hinh.html">03 Màn hình</a>
+      <a href="04-quy-tac-du-lieu.html" aria-current="page">04 Quy tắc &amp; dữ liệu</a>
+      <a href="05-ke-hoach-test.html">05 Kế hoạch test</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Tài liệu 04</div>
+    <h1>Quy tắc &amp; dữ liệu</h1>
+    <p>Luật chơi viết thành quy tắc kiểm được: công thức thời gian, cách phân loại từng lần bấm, máy trạng thái, dữ liệu một lượt và cách lưu kỷ lục.</p>
+  </div>
+</div>
+
+<main>
+<div class="layout">
+  <aside class="toc">
+    <h2>Trong trang</h2>
+    <ol>
+      <li><a href="#hang-so">1. Hằng số</a></li>
+      <li><a href="#thoi-gian">2. Thời gian</a></li>
+      <li><a href="#bam">3. Bấm &amp; điểm</a></li>
+      <li><a href="#ket-thuc">4. Kết thúc lượt</a></li>
+      <li><a href="#trang-thai">5. Máy trạng thái</a></li>
+      <li><a href="#du-lieu">6. Dữ liệu lượt</a></li>
+      <li><a href="#luu-tru">7. Lưu kỷ lục</a></li>
+      <li><a href="#bat-bien">8. Điều luôn đúng</a></li>
+    </ol>
+  </aside>
+
+  <div>
+    <section id="hang-so">
+      <h2 class="section-title">1. Hằng số</h2>
+      <p class="section-desc">Gom ở một chỗ đầu code để dễ chỉnh. Không cho người chơi thay đổi.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tên</th><th>Giá trị</th><th>Ý nghĩa</th><th>Nguồn</th></tr></thead>
+          <tbody>
+            <tr><td><code>THOI_GIAN_LUOT</code></td><td>30 giây</td><td>Độ dài một lượt</td><td>YEU-CAU</td></tr>
+            <tr><td><code>SO_O</code></td><td>9 (3×3)</td><td>Số ô lưới</td><td>YEU-CAU</td></tr>
+            <tr><td><code>HIEN_DAU</code></td><td>1,2 giây</td><td>Thời gian hiện đầu lượt</td><td>YEU-CAU</td></tr>
+            <tr><td><code>HIEN_CUOI</code></td><td>0,6 giây</td><td>Thời gian hiện cuối lượt</td><td>YEU-CAU</td></tr>
+            <tr><td><code>NGHI_GIUA</code></td><td>0,1 giây</td><td>Nghỉ giữa hai con khi con trước bị lỡ (≤ 0,2)</td><td>YEU-CAU</td></tr>
+            <tr><td><code>HIEU_UNG_DAP</code></td><td>0,2 giây</td><td>Thời gian hình “bị đập”</td><td>YEU-CAU</td></tr>
+            <tr><td><code>CANH_BAO</code></td><td>5 giây</td><td>Còn ≤ giá trị này thì đồng hồ đỏ</td><td>YEU-CAU</td></tr>
+            <tr><td><code>DEM_NGUOC</code></td><td>3 giây</td><td>Đếm 3-2-1 trước lượt</td><td>Phỏng vấn</td></tr>
+            <tr><td><code>TU_VE</code></td><td>20 giây</td><td>Không chạm ở màn Kết quả thì về màn đầu</td><td>Phỏng vấn</td></tr>
+            <tr><td><code>GIU_XOA</code></td><td>3 giây</td><td>Nhấn giữ khối Kỷ lục để mở hộp xoá</td><td>Phỏng vấn</td></tr>
+            <tr><td><code>KHOA_LUU</code></td><td><code>"dapchuot.kyLuc"</code></td><td>Tên khoá trong localStorage</td><td>Tài liệu này</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="thoi-gian">
+      <h2 class="section-title">2. Thời gian</h2>
+
+      <div class="panel">
+        <p><span class="rule-id">QT-01</span><strong>Đồng hồ lượt.</strong> Mốc <code>batDau</code> là thời điểm đếm 3-2-1 kết thúc. Thời gian đã chơi <code>t = bây giờ − batDau</code> (giây, đồng hồ đơn điệu của trình duyệt). Còn lại <code>max(0, 30 − t)</code>; hiển thị làm tròn lên. Không cộng dồn từng nhịp hẹn giờ, để không trôi khi máy chậm.</p>
+      </div>
+
+      <div class="panel">
+        <p><span class="rule-id">QT-02</span><strong>Thời gian hiện của mỗi con chuột</strong> — giảm tuyến tính theo thời điểm con đó xuất hiện:</p>
+        <pre><code>hien(t) = 1,2 − 0,6 × (t / 30)        với t = thời gian đã chơi lúc chuột xuất hiện, 0 ≤ t ≤ 30</code></pre>
+        <p style="margin-top: var(--space-3);">Thời gian hiện được chốt lúc con chuột xuất hiện và không đổi trong khi nó đứng trên ô. Nếu lượt kết thúc trước khi hết thời gian hiện, con đó bị cắt (QT-05).</p>
+
+        <svg class="chart" viewBox="0 0 560 256" role="img" aria-label="Thời gian hiện giảm từ 1,2 giây lúc 0 giây xuống 0,6 giây lúc 30 giây">
+          <line class="grid" x1="60" y1="30" x2="540" y2="30"/>
+          <line class="grid" x1="60" y1="90" x2="540" y2="90"/>
+          <line class="grid" x1="60" y1="150" x2="540" y2="150"/>
+          <line class="axis" x1="60" y1="210" x2="540" y2="210"/>
+          <line class="axis" x1="60" y1="20" x2="60" y2="210"/>
+          <text x="52" y="34" text-anchor="end">1,2</text>
+          <text x="52" y="94" text-anchor="end">1,0</text>
+          <text x="52" y="154" text-anchor="end">0,8</text>
+          <text x="52" y="214" text-anchor="end">0,6</text>
+          <text x="60" y="230" text-anchor="middle">0</text>
+          <text x="180" y="230" text-anchor="middle">7,5</text>
+          <text x="300" y="230" text-anchor="middle">15</text>
+          <text x="420" y="230" text-anchor="middle">22,5</text>
+          <text x="540" y="230" text-anchor="middle">30</text>
+          <text x="300" y="252" text-anchor="middle">Thời gian đã chơi (giây)</text>
+          <text x="14" y="115" text-anchor="middle" transform="rotate(-90 14 115)">Thời gian hiện (giây)</text>
+          <polyline class="line" points="60,30 540,210"/>
+          <circle class="dot" cx="60" cy="30" r="5"/>
+          <circle class="dot" cx="300" cy="120" r="5"/>
+          <circle class="dot" cx="540" cy="210" r="5"/>
+          <text class="lbl" x="72" y="24">1,2 giây</text>
+          <text class="lbl" x="310" y="112">0,9 giây</text>
+          <text class="lbl" x="532" y="194" text-anchor="end">0,6 giây</text>
+        </svg>
+
+        <div class="table-wrap" style="margin-top: var(--space-4);">
+          <table>
+            <thead><tr><th>Chuột xuất hiện lúc (t)</th><th>0 giây</th><th>7,5 giây</th><th>15 giây</th><th>22,5 giây</th><th>29,9 giây</th></tr></thead>
+            <tbody><tr><td>Thời gian hiện</td><td>1,20</td><td>1,05</td><td>0,90</td><td>0,75</td><td>0,60</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <p><span class="rule-id">QT-04</span><strong>Nối tiếp giữa hai con.</strong></p>
+        <ul>
+          <li>Con trước bị <strong>lỡ</strong>: con sau xuất hiện sau <code>NGHI_GIUA</code> = 0,1 giây.</li>
+          <li>Con trước bị <strong>đập</strong>: hình “bị đập” giữ 0,2 giây, ngay khi hết hình này con sau xuất hiện (không nghỉ thêm). Tổng thời gian trống ≤ 0,2 giây.</li>
+          <li>Ô mới chọn ngẫu nhiên đều trong 8 ô khác ô của con vừa rồi (QT-10).</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <p><span class="rule-id">QT-09</span><strong>Trang bị ẩn giữa lượt</strong> (chuyển tab, khoá màn hình) — <span class="badge badge-gray">Giả định QD-08</span></p>
+        <ul>
+          <li>Không tạm dừng (tạm dừng nằm ngoài phạm vi). Đồng hồ vẫn tính theo giờ thật (QT-01).</li>
+          <li>Khi trang hiện lại: nếu đã quá 30 giây → kết thúc lượt ngay (QT-05) và vào màn Kết quả. Nếu chưa → chơi tiếp; con chuột đang hiện mà đã quá hạn thì tính lỡ và hiện con mới.</li>
+          <li>Trong lúc đếm 3-2-1 mà trang bị ẩn: khi hiện lại, đếm tiếp theo giờ thật.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="bam">
+      <h2 class="section-title">3. Bấm &amp; điểm</h2>
+      <p class="section-desc"><span class="rule-id">QT-03</span>Mỗi lần nhấn xuống vào một ô được phân loại theo bảng sau, xét tại đúng thời điểm nhấn.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Trạng thái game</th><th>Ô được bấm</th><th>Kết quả</th><th>Điểm</th><th>Trúng</th><th>Trượt</th></tr></thead>
+          <tbody>
+            <tr><td>Đang chơi</td><td>Có chuột, chưa bị đập</td><td><span class="badge badge-success">Trúng</span> — chuột chuyển “bị đập”</td><td>+1</td><td>+1</td><td>—</td></tr>
+            <tr><td>Đang chơi</td><td>Có chuột đang “bị đập” (trong 0,2 giây)</td><td><span class="badge badge-gray">Bỏ qua</span></td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>Đang chơi</td><td>Ô trống (kể cả ô vừa có chuột lỡ)</td><td><span class="badge badge-danger">Trượt</span> — ô rung</td><td>0</td><td>—</td><td>+1</td></tr>
+            <tr><td>Đếm 3-2-1</td><td>Bất kỳ</td><td><span class="badge badge-gray">Bỏ qua</span></td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>Hết giờ / Kết quả / Bắt đầu</td><td>Bất kỳ</td><td><span class="badge badge-gray">Bỏ qua</span></td><td>—</td><td>—</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <div>
+          <strong>Bấm đúng lúc chuột vừa hết hạn</strong>
+          <p>So thời điểm nhấn với thời điểm hết hạn của con chuột: nhấn trước hoặc bằng mốc hết hạn → Trúng; nhấn sau → con đó đã lỡ, ô trống → Trượt. Tương tự với mốc 30 giây: nhấn sau mốc → Bỏ qua.</p>
+        </div>
+      </div>
+      <div class="panel">
+        <p><span class="rule-id">QT-10</span><strong>Chọn ô ngẫu nhiên.</strong> Lấy danh sách 9 ô bỏ ô vừa hiện (còn 8, hoặc 9 với con đầu lượt), chọn một ô với xác suất bằng nhau. Không chọn lại rồi thử nữa (tránh vòng lặp).</p>
+      </div>
+    </section>
+
+    <section id="ket-thuc">
+      <h2 class="section-title">4. Kết thúc lượt</h2>
+      <div class="panel">
+        <p><span class="rule-id">QT-05</span><strong>Khi còn lại = 0, làm đúng thứ tự:</strong></p>
+        <ol>
+          <li>Đặt trạng thái “Hết giờ” — từ đây mọi lần bấm bị bỏ qua.</li>
+          <li>Huỷ mọi hẹn giờ của lượt (chuột hết hạn, con kế tiếp, hiệu ứng).</li>
+          <li>Ẩn chuột đang hiện. Con này <strong>không</strong> tính lỡ (<span class="badge badge-gray">Giả định QD-06</span>) vì người chơi không còn đủ thời gian hiện của nó.</li>
+          <li>So điểm với kỷ lục (QT-07), lưu nếu cần.</li>
+          <li>Hiện màn Kết quả, bắt đầu đếm 20 giây tự về (CN-11).</li>
+        </ol>
+      </div>
+      <div class="panel">
+        <p><span class="rule-id">QT-07</span><strong>Cập nhật kỷ lục.</strong> Chỉ khi <code>điểm &gt; kỷ lục</code> (lớn hơn hẳn). Khi đó <code>kyLucMoi = true</code>, lưu điểm làm kỷ lục, màn Kết quả hiện “Kỷ lục mới!”. Bằng kỷ lục thì không tính (<span class="badge badge-gray">Giả định QD-05</span>). Kỷ lục 0 và điểm 0 → không phải kỷ lục mới.</p>
+      </div>
+    </section>
+
+    <section id="trang-thai">
+      <h2 class="section-title">5. Máy trạng thái</h2>
+      <p class="section-desc"><span class="rule-id">QT-08</span>Game luôn ở đúng một trạng thái. Mọi thao tác không có trong bảng thì bỏ qua.</p>
+      <div class="panel">
+        <div class="flow">
+          <span class="node">BAT_DAU</span><span class="arrow">→</span>
+          <span class="node">DEM_NGUOC</span><span class="arrow">→</span>
+          <span class="node">DANG_CHOI</span><span class="arrow">→</span>
+          <span class="node">KET_QUA</span><span class="arrow">→ BAT_DAU / DEM_NGUOC</span>
+        </div>
+        <div class="flow" style="margin-top: var(--space-3);">
+          <span class="node">BAT_DAU</span><span class="arrow">⇄</span><span class="node alt">XAC_NHAN_XOA</span>
+        </div>
+      </div>
+      <div class="table-wrap" style="margin-top: var(--space-4);">
+        <table>
+          <thead><tr><th>Từ</th><th>Sự kiện</th><th>Sang</th><th>Việc làm</th></tr></thead>
+          <tbody>
+            <tr><td><code>BAT_DAU</code></td><td>Bấm Bắt đầu</td><td><code>DEM_NGUOC</code></td><td>Đặt lại dữ liệu lượt (DL-01)</td></tr>
+            <tr><td><code>BAT_DAU</code></td><td>Giữ khối Kỷ lục đủ 3 giây</td><td><code>XAC_NHAN_XOA</code></td><td>Mở hộp xác nhận</td></tr>
+            <tr><td><code>XAC_NHAN_XOA</code></td><td>Xoá</td><td><code>BAT_DAU</code></td><td>Xoá kỷ lục (DL-02), hiện 0</td></tr>
+            <tr><td><code>XAC_NHAN_XOA</code></td><td>Huỷ / bấm ngoài hộp / phím Esc</td><td><code>BAT_DAU</code></td><td>Không đổi gì</td></tr>
+            <tr><td><code>DEM_NGUOC</code></td><td>Hết 3 giây</td><td><code>DANG_CHOI</code></td><td>Ghi <code>batDau</code>, hiện con chuột đầu</td></tr>
+            <tr><td><code>DANG_CHOI</code></td><td>Bấm ô</td><td><code>DANG_CHOI</code></td><td>Theo QT-03</td></tr>
+            <tr><td><code>DANG_CHOI</code></td><td>Chuột hết thời gian hiện</td><td><code>DANG_CHOI</code></td><td>lỡ +1, hẹn con kế tiếp (QT-04)</td></tr>
+            <tr><td><code>DANG_CHOI</code></td><td>Còn lại = 0</td><td><code>KET_QUA</code></td><td>Theo QT-05</td></tr>
+            <tr><td><code>KET_QUA</code></td><td>Bấm Chơi lại</td><td><code>DEM_NGUOC</code></td><td>Huỷ hẹn tự về, đặt lại dữ liệu lượt</td></tr>
+            <tr><td><code>KET_QUA</code></td><td>Có thao tác bất kỳ</td><td><code>KET_QUA</code></td><td>Đếm tự về lại từ 20</td></tr>
+            <tr><td><code>KET_QUA</code></td><td>20 giây không thao tác</td><td><code>BAT_DAU</code></td><td>Hiện màn Bắt đầu</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="du-lieu">
+      <h2 class="section-title">6. Dữ liệu lượt</h2>
+      <p class="section-desc"><span class="rule-id">DL-01</span>Chỉ sống trong bộ nhớ trang, mất khi tải lại. Đặt lại toàn bộ mỗi lần Bắt đầu / Chơi lại.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Trường</th><th>Kiểu</th><th>Ban đầu</th><th>Ý nghĩa</th></tr></thead>
+          <tbody>
+            <tr><td><code>trangThai</code></td><td>Một trong 5 trạng thái QT-08</td><td><code>BAT_DAU</code></td><td>Trạng thái hiện tại</td></tr>
+            <tr><td><code>diem</code></td><td>Số nguyên ≥ 0</td><td>0</td><td>Điểm lượt này</td></tr>
+            <tr><td><code>trung</code></td><td>Số nguyên ≥ 0</td><td>0</td><td>Số lần trúng</td></tr>
+            <tr><td><code>truot</code></td><td>Số nguyên ≥ 0</td><td>0</td><td>Số lần trượt</td></tr>
+            <tr><td><code>lo</code></td><td>Số nguyên ≥ 0</td><td>0</td><td>Số chuột bị lỡ</td></tr>
+            <tr><td><code>batDau</code></td><td>Mốc thời gian (ms) hoặc rỗng</td><td>rỗng</td><td>Lúc bắt đầu 30 giây</td></tr>
+            <tr><td><code>oChuot</code></td><td>1–9 hoặc rỗng</td><td>rỗng</td><td>Ô đang có chuột</td></tr>
+            <tr><td><code>oTruoc</code></td><td>1–9 hoặc rỗng</td><td>rỗng</td><td>Ô của con vừa rồi (để không trùng)</td></tr>
+            <tr><td><code>hetHanChuot</code></td><td>Mốc thời gian (ms) hoặc rỗng</td><td>rỗng</td><td>Lúc con hiện tại tự biến mất</td></tr>
+            <tr><td><code>daDap</code></td><td>Đúng/Sai</td><td>Sai</td><td>Con hiện tại đã bị đập chưa (chống tính 2 lần)</td></tr>
+            <tr><td><code>soLanHien</code></td><td>Số nguyên ≥ 0</td><td>0</td><td>Số con đã xuất hiện (phục vụ kiểm tra)</td></tr>
+            <tr><td><code>kyLuc</code></td><td>Số nguyên ≥ 0</td><td>Đọc từ DL-02</td><td>Kỷ lục đang dùng</td></tr>
+            <tr><td><code>kyLucMoi</code></td><td>Đúng/Sai</td><td>Sai</td><td>Lượt này có phá kỷ lục không</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="luu-tru">
+      <h2 class="section-title">7. Lưu kỷ lục</h2>
+      <p class="section-desc"><span class="rule-id">DL-02</span> · <span class="rule-id">QT-06</span>Giá trị duy nhất được lưu lại sau khi tải trang.</p>
+      <div class="panel">
+        <dl class="defs">
+          <dt>Nơi lưu</dt><dd><code>localStorage</code> của trình duyệt (riêng từng máy, từng trình duyệt).</dd>
+          <dt>Khoá</dt><dd><code>dapchuot.kyLuc</code></dd>
+          <dt>Giá trị</dt><dd>Chuỗi số nguyên không âm, ví dụ <code>"26"</code>.</dd>
+          <dt>Đọc</dt><dd>Một lần khi mở game. Không có, không phải số nguyên, âm, hoặc lớn bất thường (&gt; 999) → coi là 0.</dd>
+          <dt>Ghi</dt><dd>Chỉ khi QT-07 đúng. Ghi xong mới hiện màn Kết quả.</dd>
+          <dt>Xoá</dt><dd>Khi CN-12 xác nhận Xoá: xoá khoá.</dd>
+          <dt>Bị chặn / lỗi</dt><dd>Mọi lần đọc, ghi, xoá đều bọc bắt lỗi. Lỗi → dùng giá trị trong bộ nhớ trang, không báo người chơi, không để lỗi ra Console.</dd>
+        </dl>
+      </div>
+      <div class="callout accent">
+        <div>
+          <strong>Vì sao giới hạn 999?</strong>
+          <p>30 giây với thời gian hiện ngắn nhất 0,6 giây và hiệu ứng 0,2 giây cho tối đa khoảng 50 con mỗi lượt. Giá trị lớn hơn nhiều chắc chắn là dữ liệu hỏng hoặc bị sửa tay.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="bat-bien">
+      <h2 class="section-title">8. Điều luôn đúng</h2>
+      <p class="section-desc">Dùng để viết kiểm tra tự động hoặc soát log khi test.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Mã</th><th>Điều kiện</th></tr></thead>
+          <tbody>
+            <tr><td class="id">BB-01</td><td>Mọi lúc có tối đa 1 chuột trên lưới.</td></tr>
+            <tr><td class="id">BB-02</td><td><code>diem = trung</code>.</td></tr>
+            <tr><td class="id">BB-03</td><td><code>trung + lo ≤ soLanHien</code> (chênh tối đa 1 — con bị cắt lúc hết giờ).</td></tr>
+            <tr><td class="id">BB-04</td><td>Hai lần hiện liên tiếp không cùng ô.</td></tr>
+            <tr><td class="id">BB-05</td><td>Ngoài <code>DANG_CHOI</code>, <code>diem</code>, <code>trung</code>, <code>truot</code>, <code>lo</code> không đổi.</td></tr>
+            <tr><td class="id">BB-06</td><td>Kỷ lục không bao giờ giảm, trừ khi xoá bằng CN-12.</td></tr>
+            <tr><td class="id">BB-07</td><td>Thời gian hiện của mỗi con nằm trong [0,6; 1,2] giây.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <nav class="pager">
+      <a href="03-man-hinh.html"><small>← Trước</small><span>03 Màn hình</span></a>
+      <a class="next" href="05-ke-hoach-test.html"><small>Tiếp →</small><span>05 Kế hoạch test</span></a>
+    </nav>
+  </div>
+</div>
+</main>
+
+<footer class="foot">Tài liệu thiết kế Đập chuột · 04 Quy tắc &amp; dữ liệu</footer>
+</body>
+</html>
