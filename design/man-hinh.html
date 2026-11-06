@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thiết kế màn hình — Đập chuột</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="game.css">
+<style>
+  /* Khung trang của bảng thiết kế (không thuộc game) */
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: var(--leading-sm);
+    color: var(--text-primary);
+    background: var(--color-gray-150);
+  }
+  code { font-family: var(--font-mono); font-size: var(--text-xs); background: var(--bg-brand-soft); color: var(--color-primary-700); padding: 1px 6px; border-radius: var(--radius-sm); }
+  .topbar { background: var(--bg-brand-strong); color: var(--text-on-brand); padding: var(--space-4) var(--space-6); display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+  .topbar .dot { width: 28px; height: 28px; border-radius: var(--radius-full); background: var(--gradient-accent); }
+  .topbar strong { font-size: var(--text-md); }
+  .topbar nav { margin-left: auto; display: flex; gap: var(--space-4); }
+  .topbar a { color: var(--color-primary-200); text-decoration: none; font-size: var(--text-xs); }
+  .topbar a:hover { color: var(--text-on-brand); }
+  .hero { background: var(--gradient-brand); color: var(--text-on-brand); padding: var(--space-10) var(--space-6); }
+  .hero h1 { margin: 0; font-size: var(--text-4xl); line-height: var(--leading-4xl); font-weight: var(--font-weight-bold); }
+  .hero p { margin: var(--space-3) 0 0; font-size: var(--text-md); line-height: var(--leading-md); opacity: .88; max-width: 640px; }
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-top: var(--space-6); font-size: var(--text-xs); }
+  .flow a { color: inherit; text-decoration: none; background: rgba(255,255,255,.16); padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-weight: var(--font-weight-semibold); }
+  .flow a:hover { background: rgba(255,255,255,.28); }
+  .flow span { opacity: .75; }
+
+  main { max-width: 1280px; margin: 0 auto; padding: var(--space-8) var(--space-4) var(--space-16); }
+  section { margin-bottom: var(--space-12); }
+  .section-title { margin: 0 0 var(--space-2); font-size: var(--text-3xl); line-height: var(--leading-3xl); font-weight: var(--font-weight-bold); color: var(--text-heading); }
+  .section-desc { margin: 0 0 var(--space-6); max-width: 720px; color: var(--color-gray-800); }
+
+  .shots { display: flex; flex-wrap: wrap; gap: var(--space-8) var(--space-6); align-items: flex-start; }
+  .shot { margin: 0; max-width: 100%; }
+  .shot-desktop { width: 100%; }
+  .device { background: var(--bg-page); border: 6px solid var(--color-gray-900); overflow: hidden; box-shadow: var(--shadow-lg); max-width: 100%; }
+  .device-phone { width: 372px; height: 652px; border-radius: 36px; }
+  .device-small { width: 332px; height: 580px; border-radius: 32px; }
+  .device-desktop { width: 100%; height: 660px; border-radius: var(--radius-2xl); border-width: 1px; border-color: var(--border-default); }
+  figcaption { margin-top: var(--space-3); max-width: 372px; display: grid; gap: 2px; }
+  figcaption b { color: var(--text-heading); font-size: var(--text-sm); }
+  figcaption .code { display: inline-block; margin-right: var(--space-2); padding: 0 var(--space-2); border-radius: var(--radius-sm); background: var(--bg-brand-strong); color: var(--text-on-brand); font-size: var(--text-2xs); line-height: 20px; font-weight: var(--font-weight-semibold); vertical-align: 1px; }
+  figcaption span { color: var(--color-gray-800); }
+  figcaption a { color: var(--text-link); text-decoration: none; font-size: var(--text-xs); font-weight: var(--font-weight-medium); width: fit-content; }
+  figcaption a:hover { text-decoration: underline; }
+
+  .panel { background: var(--bg-surface); border-radius: var(--radius-xl); box-shadow: var(--shadow-md); padding: var(--space-6); margin-bottom: var(--space-4); }
+  .group-label { margin: 0 0 var(--space-4); font-size: var(--text-xs); font-weight: var(--font-weight-semibold); letter-spacing: .06em; text-transform: uppercase; color: var(--color-gray-600); }
+  .states { display: flex; flex-wrap: wrap; gap: var(--space-6); align-items: flex-end; }
+  .state { display: grid; gap: var(--space-2); justify-items: center; text-align: center; font-size: var(--text-xs); color: var(--color-gray-800); }
+  .state .screen { width: auto; height: auto; overflow: visible; background: none; container-type: normal; display: block; }
+  .state .cell { width: 104px; height: 104px; display: block; }
+  .state .hud { width: 300px; border-radius: var(--radius-xl); margin: 0; }
+  .on-page { background: var(--bg-page); border-radius: var(--radius-xl); padding: var(--space-6); }
+
+  .demos { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: var(--space-4); }
+  .demo { background: var(--bg-page); border-radius: var(--radius-xl); padding: var(--space-4); display: grid; gap: var(--space-3); justify-items: center; text-align: center; }
+  .demo .stage { height: 120px; display: grid; place-items: center; width: 100%; }
+  .demo .stage.navy { background: var(--bg-brand-strong); border-radius: var(--radius-xl); }
+  .demo .screen { width: auto; height: auto; overflow: visible; background: none; container-type: normal; display: block; }
+  .demo .cell { width: 104px; height: 104px; display: block; }
+  .demo .count { font-size: 72px; }
+  .demo .hud { background: none; min-height: 0; padding: 0; display: block; }
+  .demo b.name { color: var(--text-heading); }
+  .demo small { color: var(--color-gray-800); font-size: var(--text-xs); line-height: var(--leading-xs); }
+
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: var(--space-3); border-bottom: 1px solid var(--border-subtle); vertical-align: middle; }
+  th { font-size: var(--text-xs); color: var(--color-gray-600); font-weight: var(--font-weight-semibold); }
+  td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .table-wrap { overflow-x: auto; }
+  .sw { display: inline-grid; place-items: center; width: 32px; height: 24px; margin-right: var(--space-2); border-radius: var(--radius-sm); font-weight: var(--font-weight-bold); font-size: var(--text-xs); border: 1px solid var(--border-subtle); vertical-align: middle; }
+  .tag { display: inline-block; padding: 0 var(--space-2); border-radius: var(--radius-full); font-size: var(--text-xs); line-height: 22px; font-weight: var(--font-weight-semibold); white-space: nowrap; }
+  .tag.ok { background: var(--color-success-50); color: #0b7a37; }
+  .tag.bad { background: var(--color-danger-50); color: #c4002f; }
+  .note { margin: var(--space-4) 0 0; color: var(--color-gray-800); max-width: 760px; }
+
+  /* Xem một màn ở cỡ thật: ?man=<id> */
+  body.solo > *:not(.solo-host):not(.solo-back) { display: none; }
+  body.solo { overflow: hidden; }
+  .solo-host { position: fixed; inset: 0; height: 100dvh; }
+  .solo-back { position: fixed; right: var(--space-2); bottom: var(--space-2); z-index: 10; font-size: var(--text-2xs); padding: 2px var(--space-2); border-radius: var(--radius-full); background: var(--color-gray-900); color: var(--color-white); text-decoration: none; opacity: .55; }
+  .solo-back:hover { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- Hình vẽ dùng chung: copy khối <svg> này vào file game -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <clipPath id="hole-clip"><path d="M0 -100 H100 V80 H86 A36 10 0 0 1 14 80 H0 Z"/></clipPath>
+    <symbol id="hole" viewBox="0 0 100 100"><ellipse class="m-rim" cx="50" cy="80" rx="42" ry="14"/><ellipse class="m-hole" cx="50" cy="80" rx="36" ry="10"/></symbol>
+    <symbol id="mouse-body" viewBox="0 0 100 100"><circle class="m-fur" cx="27" cy="28" r="14"/><circle class="m-ear" cx="27" cy="28" r="8"/><circle class="m-fur" cx="73" cy="28" r="14"/><circle class="m-ear" cx="73" cy="28" r="8"/><path class="m-fur" d="M22 80 C22 40 32 30 50 30 C68 30 78 40 78 80 Z"/><ellipse class="m-light" cx="50" cy="64" rx="15" ry="11"/><circle class="m-eye" cx="40" cy="50" r="4"/><circle class="m-eye" cx="60" cy="50" r="4"/><circle class="m-nose" cx="50" cy="58" r="4"/><path class="m-line" d="M36 62 L20 58 M36 66 L20 68 M64 62 L80 58 M64 66 L80 68"/></symbol>
+    <symbol id="mouse" viewBox="0 0 100 100"><ellipse class="m-rim" cx="50" cy="80" rx="42" ry="14"/><ellipse class="m-hole" cx="50" cy="80" rx="36" ry="10"/><circle class="m-fur" cx="27" cy="28" r="14"/><circle class="m-ear" cx="27" cy="28" r="8"/><circle class="m-fur" cx="73" cy="28" r="14"/><circle class="m-ear" cx="73" cy="28" r="8"/><path class="m-fur" d="M22 80 C22 40 32 30 50 30 C68 30 78 40 78 80 Z"/><ellipse class="m-light" cx="50" cy="64" rx="15" ry="11"/><circle class="m-eye" cx="40" cy="50" r="4"/><circle class="m-eye" cx="60" cy="50" r="4"/><circle class="m-nose" cx="50" cy="58" r="4"/><path class="m-line" d="M36 62 L20 58 M36 66 L20 68 M64 62 L80 58 M64 66 L80 68"/></symbol>
+    <symbol id="mouse-hit" viewBox="0 0 100 100"><ellipse class="m-rim" cx="50" cy="80" rx="42" ry="14"/><ellipse class="m-hole" cx="50" cy="80" rx="36" ry="10"/><circle class="m-fur" cx="25" cy="44" r="13"/><circle class="m-ear" cx="25" cy="44" r="7"/><circle class="m-fur" cx="75" cy="44" r="13"/><circle class="m-ear" cx="75" cy="44" r="7"/><path class="m-fur" d="M20 80 C20 52 32 46 50 46 C68 46 80 52 80 80 Z"/><ellipse class="m-light" cx="50" cy="70" rx="15" ry="8"/><path class="m-xeye" d="M36 56 L44 62 M44 56 L36 62 M56 56 L64 62 M64 56 L56 62"/><circle class="m-nose" cx="50" cy="67" r="3.5"/><path class="m-star" d="M50 8 L54 20 L66 20 L56 27 L60 39 L50 31 L40 39 L44 27 L34 20 L46 20 Z"/></symbol>
+    <symbol id="ic-trophy" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M7 3h10v2h3v3a4 4 0 0 1-3.2 3.9A5 5 0 0 1 13 14.9V18h3v3H8v-3h3v-3.1a5 5 0 0 1-3.8-3A4 4 0 0 1 4 8V5h3V3Zm0 4H6v1a2 2 0 0 0 1 1.7V7Zm10 0v2.7A2 2 0 0 0 18 8V7h-1Z"/></symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <span class="dot"></span><strong>Đập chuột · Thiết kế màn hình</strong>
+  <nav><a href="design-system.html">Design system</a><a href="../docs/03-man-hinh.html">Tài liệu 03 Màn hình</a></nav>
+</header>
+
+<div class="hero">
+  <h1>Thiết kế màn hình</h1>
+  <p>Bản dựng chi tiết của mọi màn và mọi trạng thái theo tài liệu 03, dùng <code style="background:rgba(255,255,255,.18);color:inherit">tokens.css</code> và <code style="background:rgba(255,255,255,.18);color:inherit">game.css</code>. Mỗi khung là HTML/CSS thật — bấm “Mở cỡ thật” để xem màn đó chiếm trọn cửa sổ.</p>
+  <div class="flow" aria-label="Luồng màn hình">
+    <a href="#mh-01">MH-01 Bắt đầu</a><span>→</span>
+    <a href="#mh-02a">MH-02a Đếm 3-2-1</a><span>3 giây →</span>
+    <a href="#mh-02">MH-02 Đang chơi</a><span>30 giây →</span>
+    <a href="#mh-03-moi">MH-03 Kết quả</a><span>· giữ Kỷ lục 3 giây →</span>
+    <a href="#mh-01b">MH-01b Xác nhận xoá</a>
+  </div>
+</div>
+
+<main>
+<section><h2 class="section-title">1. Màn Bắt đầu</h2><p class="section-desc">MH-01 và MH-01b. Khối Kỷ lục là vùng nhấn giữ 3 giây để mở hộp xoá (CN-12) — không có gợi ý nào trên màn.</p><div class="shots"><figure class="shot shot-phone" id="mh-01"><div class="device device-phone"><div class="screen is-frozen"><div class="start"><svg class="start-pic" viewBox="0 0 100 100" aria-hidden="true"><use href="#mouse"/></svg><h1 class="start-title">Đập chuột</h1><p class="start-rule">Đập trúng chuột để ghi điểm. Bạn có 30 giây — chuột chạy nhanh dần!</p><span class="record"><svg aria-hidden="true"><use href="#ic-trophy"/></svg>Kỷ lục <b>24</b></span><button class="btn-play" type="button" tabindex="-1">Bắt đầu</button></div></div></div><figcaption><b><span class="code">MH-01</span> Bắt đầu</b><span>Đã có kỷ lục 24.</span><a href="?man=mh-01">Mở cỡ thật ↗</a></figcaption></figure><figure class="shot shot-phone" id="mh-01-0"><div class="device device-phone"><div class="screen is-frozen"><div class="start"><svg class="start-pic" viewBox="0 0 100 100" aria-hidden="true"><use href="#mouse"/></svg><h1 class="start-title">Đập chuột</h1><p class="start-rule">Đập trúng chuột để ghi điểm. Bạn có 30 giây — chuột chạy nhanh dần!</p><span class="record"><svg aria-hidden="true"><use href="#ic-trophy"/></svg>Kỷ lục <b>0</b></span><button class="btn-play" type="button" tabindex="-1">Bắt đầu</button></div></div></div><figcaption><b><span class="code">MH-01</span> Bắt đầu · chưa có kỷ lục</b><span>Lần đầu mở, hoặc lưu trữ bị chặn: hiện 0.</span><a href="?man=mh-01-0">Mở cỡ thật ↗</a></figcaption></figure><figure class="shot shot-phone" id="mh-01b"><div class="device device-phone"><div class="screen is-frozen"><div class="start"><svg class="start-pic" viewBox="0 0 100 100" aria-hidden="true"><use href="#mouse"/></svg><h1 class="start-title">Đập chuột</h1><p class="start-rule">Đập trúng chuột để ghi điểm. Bạn có 30 giây — chuột chạy nhanh dần!</p><span class="record"><svg aria-hidden="true"><use href="#ic-trophy"/></svg>Kỷ lục <b>24</b></span><button class="btn-play" type="button" tabindex="-1">Bắt đầu</button></div><div class="overlay"><div class="dialog" role="alertdialog" aria-label="Xoá kỷ lục?"><h2>Xoá kỷ lục?</h2><p>Kỷ lục hiện tại: 24 điểm. Không hoàn tác được.</p><div class="dialog-actions"><button class="btn-dialog btn-cancel is-focus" type="button" tabindex="-1">Huỷ</button><button class="btn-dialog btn-delete" type="button" tabindex="-1">Xoá</button></div></div></div></div></div><figcaption><b><span class="code">MH-01b</span> Xác nhận xoá kỷ lục</b><span>Phủ navy 72%. Nút Huỷ nhận focus mặc định.</span><a href="?man=mh-01b">Mở cỡ thật ↗</a></figcaption></figure></div></section><section><h2 class="section-title">2. Màn Đang chơi</h2><p class="section-desc">MH-02a và MH-02. Thanh thông tin dính trên cùng; lưới vuông co theo cạnh nhỏ hơn của vùng còn trống.</p><div class="shots"><figure class="shot shot-phone" id="mh-02a"><div class="device device-phone"><div class="screen is-frozen"><div class="hud"><div><small>Điểm</small><b>0</b></div><div><small>Thời gian</small><b>30</b></div><div><small>Kỷ lục</small><b>24</b></div></div><div class="play"><div class="board"><button class="cell" type="button" tabindex="-1" aria-label="Ô 1"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 2"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 3"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 4"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 5"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 6"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 7"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 8"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 9"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button></div><div class="overlay"><div class="count">3</div></div></div></div></div><figcaption><b><span class="code">MH-02a</span> Đếm 3-2-1</b><span>Lưới trống, đồng hồ đứng ở 30. Bấm lúc này không tính.</span><a href="?man=mh-02a">Mở cỡ thật ↗</a></figcaption></figure><figure class="shot shot-phone" id="mh-02"><div class="device device-phone"><div class="screen is-frozen"><div class="hud"><div><small>Điểm</small><b>7</b></div><div><small>Thời gian</small><b>18</b></div><div><small>Kỷ lục</small><b>24</b></div></div><div class="play"><div class="board"><button class="cell" type="button" tabindex="-1" aria-label="Ô 1"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 2"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 3"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 4"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 5"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 6"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 7"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mouse"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 8"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 9"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button></div></div></div></div><figcaption><b><span class="code">MH-02</span> Chuột đang hiện</b><span>Mỗi lúc chỉ một con, ở ô 7.</span><a href="?man=mh-02">Mở cỡ thật ↗</a></figcaption></figure><figure class="shot shot-phone" id="mh-02-truot"><div class="device device-phone"><div class="screen is-frozen"><div class="hud"><div><small>Điểm</small><b>7</b></div><div><small>Thời gian</small><b>17</b></div><div><small>Kỷ lục</small><b>24</b></div></div><div class="play"><div class="board"><button class="cell" type="button" tabindex="-1" aria-label="Ô 1"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 2"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell is-miss" type="button" tabindex="-1" aria-label="Ô 3"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 4"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 5"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 6"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 7"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mouse"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 8"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 9"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button></div></div></div></div><figcaption><b><span class="code">MH-02</span> Bấm trượt</b><span>Ô 3 rung, nền đỏ nhạt, viền đỏ. Điểm không đổi.</span><a href="?man=mh-02-truot">Mở cỡ thật ↗</a></figcaption></figure><figure class="shot shot-phone" id="mh-02-trung"><div class="device device-phone"><div class="screen is-frozen"><div class="hud"><div><small>Điểm</small><b>8</b></div><div><small>Thời gian</small><b>17</b></div><div><small>Kỷ lục</small><b>24</b></div></div><div class="play"><div class="board"><button class="cell" type="button" tabindex="-1" aria-label="Ô 1"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 2"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 3"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 4"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 5"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mouse-hit"/></svg><span class="plus">+1</span></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 6"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 7"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 8"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 9"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button></div></div></div></div><figcaption><b><span class="code">MH-02</span> Bấm trúng</b><span>Ô 5: chuột bị đập 0,2 giây, “+1” bay lên. Điểm đã cộng.</span><a href="?man=mh-02-trung">Mở cỡ thật ↗</a></figcaption></figure><figure class="shot shot-phone" id="mh-02-cuoi"><div class="device device-phone"><div class="screen is-frozen"><div class="hud"><div><small>Điểm</small><b>25</b></div><div class="is-warn"><small>Thời gian</small><b>4</b></div><div><small>Kỷ lục</small><b>24</b></div></div><div class="play"><div class="board"><button class="cell" type="button" tabindex="-1" aria-label="Ô 1"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 2"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mouse"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 3"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 4"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 5"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 6"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 7"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 8"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 9"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button></div></div></div></div><figcaption><b><span class="code">MH-02</span> Còn ≤ 5 giây</b><span>Số giây đỏ và đập nhẹ mỗi giây. Kỷ lục trên thanh không đổi dù điểm đang vượt.</span><a href="?man=mh-02-cuoi">Mở cỡ thật ↗</a></figcaption></figure></div></section><section><h2 class="section-title">3. Màn Kết quả</h2><p class="section-desc">MH-03. Dòng “Kỷ lục mới!” chỉ hiện khi điểm cao hơn kỷ lục cũ; khối Kỷ lục luôn hiện giá trị đã cập nhật.</p><div class="shots"><figure class="shot shot-phone" id="mh-03-moi"><div class="device device-phone"><div class="screen is-frozen"><div class="result"><p class="result-label">Kết quả</p><span class="badge-new">★ Kỷ lục mới!</span><div class="score"><b>26</b><span>điểm</span></div><div class="stats"><div><b>26</b>Trúng</div><div><b>5</b>Trượt</div><div><b>9</b>Lỡ</div></div><span class="record"><svg aria-hidden="true"><use href="#ic-trophy"/></svg>Kỷ lục <b>26</b></span><button class="btn-play" type="button" tabindex="-1">Chơi lại</button><p class="auto-back">Tự về màn đầu sau 18 giây</p></div></div></div><figcaption><b><span class="code">MH-03</span> Kết quả · kỷ lục mới</b><span>26 điểm, phá kỷ lục 24.</span><a href="?man=mh-03-moi">Mở cỡ thật ↗</a></figcaption></figure><figure class="shot shot-phone" id="mh-03"><div class="device device-phone"><div class="screen is-frozen"><div class="result"><p class="result-label">Kết quả</p><div class="score"><b>19</b><span>điểm</span></div><div class="stats"><div><b>19</b>Trúng</div><div><b>4</b>Trượt</div><div><b>12</b>Lỡ</div></div><span class="record"><svg aria-hidden="true"><use href="#ic-trophy"/></svg>Kỷ lục <b>24</b></span><button class="btn-play" type="button" tabindex="-1">Chơi lại</button><p class="auto-back">Tự về màn đầu sau 20 giây</p></div></div></div><figcaption><b><span class="code">MH-03</span> Kết quả · thường</b><span>19 điểm, kỷ lục vẫn 24.</span><a href="?man=mh-03">Mở cỡ thật ↗</a></figcaption></figure></div></section><section><h2 class="section-title">4. Điện thoại nhỏ 320 × 568</h2><p class="section-desc">Trường hợp chật nhất phải vừa khít không cuộn. Lưới 288px, mỗi ô ~85px.</p><div class="shots"><figure class="shot shot-small" id="s-01"><div class="device device-small"><div class="screen is-frozen"><div class="start"><svg class="start-pic" viewBox="0 0 100 100" aria-hidden="true"><use href="#mouse"/></svg><h1 class="start-title">Đập chuột</h1><p class="start-rule">Đập trúng chuột để ghi điểm. Bạn có 30 giây — chuột chạy nhanh dần!</p><span class="record"><svg aria-hidden="true"><use href="#ic-trophy"/></svg>Kỷ lục <b>24</b></span><button class="btn-play" type="button" tabindex="-1">Bắt đầu</button></div></div></div><figcaption><b><span class="code">MH-01</span> Bắt đầu</b><span>320 × 568</span><a href="?man=s-01">Mở cỡ thật ↗</a></figcaption></figure><figure class="shot shot-small" id="s-02"><div class="device device-small"><div class="screen is-frozen"><div class="hud"><div><small>Điểm</small><b>7</b></div><div><small>Thời gian</small><b>18</b></div><div><small>Kỷ lục</small><b>24</b></div></div><div class="play"><div class="board"><button class="cell" type="button" tabindex="-1" aria-label="Ô 1"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 2"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 3"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 4"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 5"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 6"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 7"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mouse"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 8"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 9"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button></div></div></div></div><figcaption><b><span class="code">MH-02</span> Đang chơi</b><span>320 × 568</span><a href="?man=s-02">Mở cỡ thật ↗</a></figcaption></figure><figure class="shot shot-small" id="s-03"><div class="device device-small"><div class="screen is-frozen"><div class="result"><p class="result-label">Kết quả</p><span class="badge-new">★ Kỷ lục mới!</span><div class="score"><b>26</b><span>điểm</span></div><div class="stats"><div><b>26</b>Trúng</div><div><b>5</b>Trượt</div><div><b>9</b>Lỡ</div></div><span class="record"><svg aria-hidden="true"><use href="#ic-trophy"/></svg>Kỷ lục <b>26</b></span><button class="btn-play" type="button" tabindex="-1">Chơi lại</button><p class="auto-back">Tự về màn đầu sau 18 giây</p></div></div></div><figcaption><b><span class="code">MH-03</span> Kết quả · kỷ lục mới</b><span>320 × 568</span><a href="?man=s-03">Mở cỡ thật ↗</a></figcaption></figure></div></section><section><h2 class="section-title">5. Máy tính</h2><p class="section-desc">Khối game rộng tối đa 560px đặt giữa màn, nền trang <code>--bg-page</code>. Thanh thông tin bo góc, nằm trên lưới.</p><div class="shots"><figure class="shot shot-desktop" id="d-02"><div class="device device-desktop"><div class="screen is-frozen"><div class="hud"><div><small>Điểm</small><b>7</b></div><div><small>Thời gian</small><b>18</b></div><div><small>Kỷ lục</small><b>24</b></div></div><div class="play"><div class="board"><button class="cell" type="button" tabindex="-1" aria-label="Ô 1"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 2"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 3"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 4"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 5"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 6"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 7"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mouse"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 8"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button><button class="cell" type="button" tabindex="-1" aria-label="Ô 9"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button></div></div></div></div><figcaption><b><span class="code">MH-02</span> Đang chơi</b><span>Lưới co theo chiều cao, tối đa 560px.</span><a href="?man=d-02">Mở cỡ thật ↗</a></figcaption></figure><figure class="shot shot-desktop" id="d-01"><div class="device device-desktop"><div class="screen is-frozen"><div class="start"><svg class="start-pic" viewBox="0 0 100 100" aria-hidden="true"><use href="#mouse"/></svg><h1 class="start-title">Đập chuột</h1><p class="start-rule">Đập trúng chuột để ghi điểm. Bạn có 30 giây — chuột chạy nhanh dần!</p><span class="record"><svg aria-hidden="true"><use href="#ic-trophy"/></svg>Kỷ lục <b>24</b></span><button class="btn-play" type="button" tabindex="-1">Bắt đầu</button></div></div></div><figcaption><b><span class="code">MH-01</span> Bắt đầu</b><span>Cùng bố cục cột giữa như điện thoại.</span><a href="?man=d-01">Mở cỡ thật ↗</a></figcaption></figure></div></section>
+
+<section>
+  <h2 class="section-title">6. Thành phần &amp; trạng thái</h2>
+  <p class="section-desc">Các mảnh ghép dùng lại giữa các màn, kèm mọi trạng thái tương tác.</p>
+
+  <div class="panel">
+    <p class="group-label">Nút chính — cao 56px, rộng ≥ 200px</p>
+    <div class="states on-page">
+      <div class="state"><div class="screen"><button class="btn-play" type="button">Bắt đầu</button></div>Mặc định</div>
+      <div class="state"><div class="screen"><button class="btn-play is-hover" type="button">Bắt đầu</button></div>Di chuột</div>
+      <div class="state"><div class="screen"><button class="btn-play is-active" type="button">Bắt đầu</button></div>Đang nhấn</div>
+      <div class="state"><div class="screen"><button class="btn-play is-focus" type="button">Bắt đầu</button></div>Focus bàn phím</div>
+      <div class="state"><div class="screen"><button class="btn-play" type="button" disabled>Bắt đầu</button></div>Vô hiệu (sau lần bấm đầu)</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p class="group-label">Ô lưới</p>
+    <div class="states on-page">
+      <div class="state"><div class="screen is-frozen"><button class="cell" type="button"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button></div>Trống</div>
+      <div class="state"><div class="screen is-frozen"><button class="cell" type="button"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mouse"/></svg></button></div>Chuột hiện</div>
+      <div class="state"><div class="screen is-frozen"><button class="cell" type="button"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mouse-hit"/></svg><span class="plus">+1</span></button></div>Trúng (0,2 giây)</div>
+      <div class="state"><div class="screen is-frozen"><button class="cell is-miss" type="button"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button></div>Trượt (0,2 giây)</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p class="group-label">Thanh thông tin · Khối Kỷ lục · Nhãn Kỷ lục mới · Thống kê · Nút hộp xoá</p>
+    <div class="states on-page">
+      <div class="state"><div class="screen is-frozen"><div class="hud"><div><small>Điểm</small><b>7</b></div><div><small>Thời gian</small><b>18</b></div><div><small>Kỷ lục</small><b>24</b></div></div></div>Bình thường</div>
+      <div class="state"><div class="screen is-frozen"><div class="hud"><div><small>Điểm</small><b>25</b></div><div class="is-warn"><small>Thời gian</small><b>4</b></div><div><small>Kỷ lục</small><b>24</b></div></div></div>Còn ≤ 5 giây</div>
+      <div class="state"><div class="screen"><span class="record"><svg aria-hidden="true"><use href="#ic-trophy"/></svg>Kỷ lục <b>24</b></span></div>Khối Kỷ lục</div>
+      <div class="state"><div class="screen is-frozen"><span class="badge-new">★ Kỷ lục mới!</span></div>Nhãn Kỷ lục mới</div>
+      <div class="state"><div class="screen"><div class="stats" style="width:300px"><div><b>26</b>Trúng</div><div><b>5</b>Trượt</div><div><b>9</b>Lỡ</div></div></div>Thống kê</div>
+      <div class="state"><div class="screen"><div class="dialog-actions" style="margin:0;width:240px"><button class="btn-dialog btn-cancel" type="button">Huỷ</button><button class="btn-dialog btn-delete" type="button">Xoá</button></div></div>Nút hộp xoá</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">7. Chuyển động</h2>
+  <p class="section-desc">Hiệu ứng chạy thật bằng keyframes trong <code>game.css</code>, lặp lại để dễ xem. Khi máy bật “giảm chuyển động”: bỏ rung, bay, phóng; vẫn đổi màu và đổi hình.</p>
+  <div class="panel">
+    <div class="demos">
+      <div class="demo"><div class="stage"><div class="screen"><button class="cell" id="demo-pop" type="button"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/><g clip-path="url(#hole-clip)"><use class="mouse-body" href="#mouse-body"/></g></svg></button></div></div><b class="name">Chuột hiện / lỡ</b><small>Trượt lên, thụt xuống hang · 80ms</small></div>
+      <div class="demo"><div class="stage"><div class="screen"><button class="cell" id="demo-hit" type="button"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mouse"/></svg></button></div></div><b class="name">Trúng</b><small>Đổi hình bị đập, “+1” bay lên 16px · 200ms</small></div>
+      <div class="demo"><div class="stage"><div class="screen"><button class="cell" id="demo-miss" type="button"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#hole"/></svg></button></div></div><b class="name">Trượt</b><small>Rung ngang ±4px, nền và viền đỏ · 200ms</small></div>
+      <div class="demo"><div class="stage navy"><div class="screen"><div class="hud"><div class="is-warn"><small>Thời gian</small><b id="demo-tick">5</b></div></div></div></div><b class="name">Còn ≤ 5 giây</b><small>Số đỏ, đập nhẹ mỗi giây</small></div>
+      <div class="demo"><div class="stage navy"><div class="screen"><div class="count" id="demo-count">3</div></div></div><b class="name">Đếm 3-2-1</b><small>Phóng 120% → 100% và mờ dần · 1 giây / số</small></div>
+      <div class="demo"><div class="stage"><div class="screen"><span class="badge-new" id="demo-badge">★ Kỷ lục mới!</span></div></div><b class="name">Kỷ lục mới</b><small>Phóng 80% → 100% · 200ms</small></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">8. Kiểm tra tương phản</h2>
+  <p class="section-desc">Tài liệu 03 yêu cầu chữ đạt ≥ 4,5:1 (chữ lớn từ 24px, hoặc từ 18,66px đậm: ≥ 3:1). Bảng dưới đo trên đúng cặp token mà tài liệu chỉ định.</p>
+  <div class="panel">
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Chỗ dùng</th><th>Cặp màu</th><th>Đo được</th><th>Cần</th><th>Kết quả</th></tr></thead>
+      <tbody>
+<tr><td>Chữ nút Bắt đầu / Chơi lại (20px đậm) — đầu sáng của gradient</td><td><span class="sw" style="background:var(--color-accent-500);color:var(--color-white)">Aa</span><code>--color-white</code> trên <code>--color-accent-500</code></td><td class="num">2.72:1</td><td class="num">3.0:1</td><td><span class="tag bad">Chưa đạt</span></td></tr>
+<tr><td>Chữ nút Bắt đầu / Chơi lại (20px đậm) — đầu đậm của gradient</td><td><span class="sw" style="background:var(--color-accent-600);color:var(--color-white)">Aa</span><code>--color-white</code> trên <code>--color-accent-600</code></td><td class="num">3.36:1</td><td class="num">3.0:1</td><td><span class="tag ok">Đạt</span></td></tr>
+<tr><td>Luật tóm tắt, chữ phụ (16px thường)</td><td><span class="sw" style="background:var(--color-gray-100);color:var(--color-gray-500)">Aa</span><code>--color-gray-500</code> trên <code>--color-gray-100</code></td><td class="num">3.19:1</td><td class="num">4.5:1</td><td><span class="tag bad">Chưa đạt</span></td></tr>
+<tr><td>Số Kỷ lục (24px rất đậm)</td><td><span class="sw" style="background:var(--color-white);color:var(--color-accent-600)">Aa</span><code>--color-accent-600</code> trên <code>--color-white</code></td><td class="num">3.36:1</td><td class="num">3.0:1</td><td><span class="tag ok">Đạt</span></td></tr>
+<tr><td>Điểm lớn màn Kết quả (48px rất đậm)</td><td><span class="sw" style="background:var(--color-gray-100);color:var(--color-primary-500)">Aa</span><code>--color-primary-500</code> trên <code>--color-gray-100</code></td><td class="num">4.40:1</td><td class="num">3.0:1</td><td><span class="tag ok">Đạt</span></td></tr>
+<tr><td>Nhãn thanh thông tin (11px)</td><td><span class="sw" style="background:var(--color-primary-900);color:var(--color-primary-200)">Aa</span><code>--color-primary-200</code> trên <code>--color-primary-900</code></td><td class="num">8.64:1</td><td class="num">4.5:1</td><td><span class="tag ok">Đạt</span></td></tr>
+<tr><td>Đồng hồ đỏ ≤ 5 giây (24px đậm)</td><td><span class="sw" style="background:var(--color-primary-900);color:var(--color-danger-500)">Aa</span><code>--color-danger-500</code> trên <code>--color-primary-900</code></td><td class="num">3.94:1</td><td class="num">3.0:1</td><td><span class="tag ok">Đạt</span></td></tr>
+<tr><td>Chữ “+1” (24px rất đậm)</td><td><span class="sw" style="background:var(--color-white);color:var(--color-success-500)">Aa</span><code>--color-success-500</code> trên <code>--color-white</code></td><td class="num">2.56:1</td><td class="num">3.0:1</td><td><span class="tag bad">Chưa đạt</span></td></tr>
+<tr><td>Chữ nút Xoá (16px đậm)</td><td><span class="sw" style="background:var(--color-danger-500);color:var(--color-white)">Aa</span><code>--color-white</code> trên <code>--color-danger-500</code></td><td class="num">3.75:1</td><td class="num">4.5:1</td><td><span class="tag bad">Chưa đạt</span></td></tr>
+<tr><td>Nhãn Kỷ lục mới (14px đậm)</td><td><span class="sw" style="background:var(--color-highlight-500);color:var(--color-gray-900)">Aa</span><code>--color-gray-900</code> trên <code>--color-highlight-500</code></td><td class="num">9.66:1</td><td class="num">4.5:1</td><td><span class="tag ok">Đạt</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="note">Bản dựng này giữ nguyên token theo tài liệu. Các dòng “Chưa đạt” cần quyết định trước khi code: đổi token (ví dụ chữ phụ sang <code>--color-gray-800</code>, nền nút đậm hơn) hoặc chấp nhận ngoại lệ.</p>
+  </div>
+</section>
+</main>
+
+<script>
+(function () {
+  // Xem một màn ở cỡ thật
+  var id = new URLSearchParams(location.search).get('man');
+  var fig = id && document.getElementById(id);
+  if (fig && fig.classList.contains('shot')) {
+    var host = document.createElement('div');
+    host.className = 'solo-host';
+    host.appendChild(fig.querySelector('.screen'));
+    var back = document.createElement('a');
+    back.className = 'solo-back';
+    back.href = location.pathname + '#' + id;
+    back.textContent = '← Tất cả màn';
+    document.body.append(host, back);
+    document.body.classList.add('solo');
+    document.title = fig.querySelector('figcaption b').textContent + ' — Đập chuột';
+    return;
+  }
+
+  // Lặp hiệu ứng ở mục Chuyển động
+  function replay(el, cls) { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
+  function restart(el) { el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; }
+  var $ = function (i) { return document.getElementById(i); };
+
+  setInterval(function () { $('demo-pop').classList.toggle('is-up'); }, 900);
+
+  var hit = $('demo-hit'), use = hit.querySelector('use');
+  setInterval(function () {
+    use.setAttribute('href', '#mouse-hit');
+    var p = document.createElement('span'); p.className = 'plus'; p.textContent = '+1'; hit.appendChild(p);
+    setTimeout(function () { use.setAttribute('href', '#hole'); p.remove(); }, 200);
+    setTimeout(function () { use.setAttribute('href', '#mouse'); }, 700);
+  }, 1600);
+
+  var miss = $('demo-miss');
+  setInterval(function () {
+    replay(miss, 'is-miss');
+    setTimeout(function () { miss.classList.remove('is-miss'); }, 200);
+  }, 1200);
+
+  var tick = $('demo-tick'), t = 5;
+  setInterval(function () { t = t > 1 ? t - 1 : 5; tick.textContent = t; restart(tick); }, 1000);
+
+  var count = $('demo-count'), c = 3;
+  setInterval(function () { c = c > 1 ? c - 1 : 3; count.textContent = c; restart(count); }, 1000);
+
+  var badge = $('demo-badge');
+  setInterval(function () { restart(badge); }, 1600);
+})();
+</script>
+</body>
+</html>

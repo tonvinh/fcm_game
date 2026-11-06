@@ -1,0 +1,375 @@
+/*
+ * Thành phần giao diện game Đập chuột.
+ * Dùng kèm tokens.css. Theo docs/03-man-hinh.html (MH-01 → MH-03).
+ *
+ * .screen là khung một màn: đặt nó vào bất kỳ hộp nào có kích thước
+ * (cả trang, hoặc khung điện thoại trong bảng thiết kế) — bố cục co theo hộp đó.
+ */
+
+.screen {
+  --hud-h: 64px;
+  position: relative;
+  container-type: size;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: var(--leading-md);
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  overscroll-behavior: none;
+}
+.screen *, .screen *::before, .screen *::after { box-sizing: border-box; }
+.screen p, .screen h1, .screen h2 { margin: 0; }
+.screen button { font-family: inherit; }
+
+/* ---------- Hình vẽ SVG (khung 100×100) ---------- */
+.m-hole  { fill: var(--color-gray-800); }
+.m-rim   { fill: var(--color-primary-200); }
+.m-fur   { fill: var(--color-gray-500); }
+.m-light { fill: var(--color-gray-200); }
+.m-ear   { fill: var(--color-accent-100); }
+.m-eye   { fill: var(--color-gray-900); }
+.m-nose  { fill: var(--color-danger-500); }
+.m-line  { stroke: var(--color-gray-900); stroke-width: 1.6; stroke-linecap: round; fill: none; }
+.m-xeye  { stroke: var(--color-gray-900); stroke-width: 3; stroke-linecap: round; }
+.m-star  { fill: var(--color-highlight-500); }
+
+/* ---------- Nút chính: Bắt đầu / Chơi lại ---------- */
+.btn-play {
+  appearance: none;
+  border: 0;
+  height: 56px;
+  min-width: 200px;
+  padding: 0 var(--space-10);
+  border-radius: var(--radius-full);
+  background: var(--gradient-accent);
+  color: var(--text-on-brand);
+  font-size: var(--text-xl);
+  line-height: var(--leading-xl);
+  font-weight: var(--font-weight-bold);
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  transition: filter var(--duration-fast) var(--ease-standard),
+              transform var(--duration-fast) var(--ease-standard);
+}
+.btn-play:hover, .btn-play.is-hover { filter: brightness(1.06); }
+.btn-play:active, .btn-play.is-active { transform: translateY(1px); filter: brightness(.94); box-shadow: var(--shadow-sm); }
+.btn-play:focus-visible, .btn-play.is-focus { outline: none; box-shadow: var(--focus-ring), var(--shadow-lg); }
+.btn-play:disabled {
+  background: var(--color-gray-150);
+  color: var(--color-gray-500);
+  box-shadow: none;
+  cursor: not-allowed;
+  filter: none;
+  transform: none;
+}
+
+/* ---------- Khối Kỷ lục ---------- */
+.record {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 48px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-full);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+.record svg { width: 24px; height: 24px; fill: var(--color-highlight-500); flex: none; }
+.record b {
+  font-size: var(--text-2xl);
+  line-height: var(--leading-2xl);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-accent-600);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- MH-01 Bắt đầu / MH-03 Kết quả: cột giữa màn ---------- */
+.start, .result {
+  flex: 1;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 3.5cqh, 24px);
+  text-align: center;
+}
+
+.start-pic {
+  width: clamp(96px, 20cqh, 128px);
+  height: clamp(96px, 20cqh, 128px);
+  flex: none;
+}
+.start-title {
+  font-size: var(--text-5xl);
+  line-height: var(--leading-5xl);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-primary-900);
+  letter-spacing: -0.01em;
+}
+.start-rule { max-width: 300px; color: var(--text-secondary); text-wrap: balance; }
+
+/* ---------- MH-02 Đang chơi ---------- */
+.hud {
+  flex: none;
+  min-height: var(--hud-h);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  padding: var(--space-2) var(--space-4);
+  background: var(--bg-brand-strong);
+  color: var(--text-on-brand);
+  text-align: center;
+}
+.hud small {
+  display: block;
+  font-size: var(--text-2xs);
+  line-height: var(--leading-2xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--color-primary-200);
+}
+.hud b {
+  display: block;
+  font-size: var(--text-2xl);
+  line-height: var(--leading-2xl);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+.hud .is-warn b { color: var(--color-danger-500); animation: tick 1s var(--ease-standard) infinite; }
+
+.play {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+}
+
+/* Cạnh lưới = nhỏ nhất của (rộng − 32), (cao − thanh thông tin − 32), 560 */
+.board {
+  width: min(100cqw - 32px, 100cqh - var(--hud-h) - 32px, 560px);
+  aspect-ratio: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-2xl);
+  background: var(--color-primary-100);
+  touch-action: none;
+}
+
+.cell {
+  appearance: none;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+.cell svg { display: block; width: 100%; height: 100%; pointer-events: none; }
+.cell:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+/* Trượt: rung ngang ±4px, nền đỏ nhạt, viền đỏ — 200ms */
+.cell.is-miss {
+  background: var(--color-danger-50);
+  border-color: var(--color-danger-500);
+  animation: shake var(--duration-base) var(--ease-standard);
+}
+
+/* Trúng: chữ +1 bay lên 16px rồi mờ — 200ms */
+.plus {
+  position: absolute;
+  top: 4%;
+  right: 8%;
+  font-size: var(--text-2xl);
+  line-height: var(--leading-2xl);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-success-500);
+  pointer-events: none;
+  animation: plus-rise var(--duration-base) var(--ease-standard) forwards;
+}
+
+/* Chuột trượt lên / thụt xuống hang — 80ms. Thêm .is-up vào ô để chuột hiện. */
+.mouse-body { transform: translateY(80px); transition: transform 80ms var(--ease-standard); }
+.is-up .mouse-body { transform: none; }
+
+/* ---------- Lớp phủ: đếm 3-2-1 và hộp xác nhận ---------- */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: color-mix(in srgb, var(--color-primary-900) 72%, transparent);
+}
+.count {
+  font-size: 96px;
+  line-height: 1;
+  font-weight: var(--font-weight-extrabold);
+  color: var(--text-on-brand);
+  font-variant-numeric: tabular-nums;
+  animation: count-pop 1s var(--ease-standard) forwards;
+}
+
+.dialog {
+  width: min(100%, 320px);
+  padding: var(--space-6);
+  border-radius: var(--radius-2xl);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-lg);
+  text-align: left;
+}
+.dialog h2 {
+  font-size: var(--text-xl);
+  line-height: var(--leading-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-heading);
+}
+.dialog p { margin-top: var(--space-2); font-size: var(--text-sm); line-height: var(--leading-sm); }
+.dialog-actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-6); }
+.btn-dialog {
+  appearance: none;
+  height: 48px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+.btn-dialog:focus-visible, .btn-dialog.is-focus { outline: none; box-shadow: var(--focus-ring); border-color: var(--border-focus); }
+.btn-cancel { background: var(--bg-surface); color: var(--text-primary); border-color: var(--border-default); }
+.btn-delete { background: var(--color-danger-500); color: var(--text-on-brand); }
+
+/* ---------- MH-03 Kết quả ---------- */
+.result { gap: clamp(8px, 2.4cqh, 16px); }
+.result-label {
+  font-size: var(--text-xs);
+  line-height: var(--leading-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.badge-new {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: 32px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-full);
+  background: var(--color-highlight-500);
+  color: var(--color-gray-900);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+  animation: badge-pop var(--duration-base) var(--ease-standard);
+}
+.score { display: flex; flex-direction: column; align-items: center; }
+.score b {
+  font-size: var(--text-6xl);
+  line-height: var(--leading-6xl);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-primary-500);
+  font-variant-numeric: tabular-nums;
+}
+.score span { color: var(--text-secondary); }
+.stats {
+  width: min(100%, 328px);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+}
+.stats div {
+  padding: var(--space-3) var(--space-2);
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-sm);
+  font-size: var(--text-xs);
+  line-height: var(--leading-xs);
+  color: var(--text-secondary);
+}
+.stats b {
+  display: block;
+  font-size: var(--text-2xl);
+  line-height: var(--leading-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-heading);
+  font-variant-numeric: tabular-nums;
+}
+.result .btn-play { margin-top: var(--space-2); }
+.auto-back { font-size: var(--text-xs); line-height: var(--leading-xs); color: var(--text-secondary); }
+
+/* ---------- Chuyển màn ---------- */
+.screen-enter { animation: fade-in var(--duration-base) var(--ease-standard); }
+
+/* ---------- Từ máy tính bảng trở lên: khe lưới rộng hơn ---------- */
+@container (min-width: 480px) {
+  .board { gap: var(--space-3); padding: var(--space-3); }
+}
+/* Khối game rộng tối đa 560px đặt giữa màn */
+@container (min-width: 600px) {
+  .hud {
+    width: 100%;
+    max-width: 560px;
+    margin: var(--space-4) auto 0;
+    border-radius: var(--radius-xl);
+  }
+  .board { --hud-h: 80px; }
+}
+
+/* ---------- Keyframes ---------- */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+@keyframes plus-rise {
+  from { transform: translateY(0); opacity: 1; }
+  to   { transform: translateY(-16px); opacity: 0; }
+}
+@keyframes tick {
+  0% { transform: scale(1.18); }
+  20%, 100% { transform: scale(1); }
+}
+@keyframes count-pop {
+  from { transform: scale(1.2); opacity: 1; }
+  to   { transform: scale(1); opacity: 0; }
+}
+@keyframes badge-pop {
+  from { transform: scale(.8); }
+  to   { transform: scale(1); }
+}
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* Ảnh tĩnh trong bảng thiết kế: giữ trạng thái, không chạy hiệu ứng */
+.is-frozen, .is-frozen * { animation: none !important; }
+
+/* Giảm chuyển động: bỏ rung, bay, phóng; giữ đổi màu và đổi hình */
+@media (prefers-reduced-motion: reduce) {
+  .cell.is-miss, .hud .is-warn b, .count, .badge-new, .screen-enter { animation: none; }
+  .plus { animation: none; }
+  .mouse-body, .btn-play { transition: none; }
+}
