@@ -156,7 +156,7 @@
                 <p class="ph-text" style="margin-top: var(--space-1);">Kỷ lục hiện tại: 24 điểm. Không hoàn tác được.</p>
                 <div class="row">
                   <span style="background: var(--color-gray-150);">Huỷ</span>
-                  <span style="background: var(--color-danger-500); color: var(--text-on-brand);">Xoá</span>
+                  <span style="background: var(--color-danger-600); color: var(--text-on-brand);">Xoá</span>
                 </div>
               </div>
             </div>
@@ -251,9 +251,9 @@
           <tbody>
             <tr><td>Hình minh hoạ</td><td>Chuột ló khỏi hang (SVG <code>mouse</code>)</td><td>~96–128px</td></tr>
             <tr><td>Tên game</td><td>“Đập chuột”</td><td><code>--text-5xl</code> extrabold, <code>--color-primary-900</code></td></tr>
-            <tr><td>Luật tóm tắt</td><td>“Đập trúng chuột để ghi điểm. Bạn có 30 giây — chuột chạy nhanh dần!”</td><td><code>--text-md</code>, <code>--text-secondary</code></td></tr>
+            <tr><td>Luật tóm tắt</td><td>“Đập trúng chuột để ghi điểm. Bạn có 30 giây — chuột chạy nhanh dần!”</td><td><code>--text-md</code>, <code>--text-secondary-strong</code></td></tr>
             <tr><td>Khối Kỷ lục</td><td>🏆 Kỷ lục <b>N</b> — vùng nhấn giữ để xoá</td><td>Viên thuốc trắng, số <code>--color-accent-600</code></td></tr>
-            <tr><td>Nút Bắt đầu</td><td>“Bắt đầu”</td><td>Cao 56px, rộng ≥ 200px, <code>--gradient-accent</code>, bo <code>--radius-full</code></td></tr>
+            <tr><td>Nút Bắt đầu</td><td>“Bắt đầu”</td><td>Cao 56px, rộng ≥ 200px, <code>--gradient-accent-strong</code>, bo <code>--radius-full</code></td></tr>
           </tbody>
         </table>
       </div>
@@ -265,7 +265,7 @@
           <tbody>
             <tr><td>Lớp phủ</td><td>Che màn Bắt đầu, bấm vào = Huỷ</td><td>navy 72% độ mờ</td></tr>
             <tr><td>Hộp</td><td>Tiêu đề “Xoá kỷ lục?”, dòng “Kỷ lục hiện tại: N điểm. Không hoàn tác được.”</td><td>Trắng, <code>--radius-2xl</code></td></tr>
-            <tr><td>Nút</td><td><strong>Huỷ</strong> (mặc định nhận focus) · <strong>Xoá</strong></td><td>Huỷ: outline; Xoá: <code>--color-danger-500</code></td></tr>
+            <tr><td>Nút</td><td><strong>Huỷ</strong> (mặc định nhận focus) · <strong>Xoá</strong></td><td>Huỷ: outline; Xoá: <code>--color-danger-600</code></td></tr>
           </tbody>
         </table>
       </div>
@@ -295,7 +295,7 @@
             <tr><td>Thống kê</td><td>3 ô: Trúng · Trượt · Lỡ</td><td>Thẻ trắng nhỏ</td></tr>
             <tr><td>Kỷ lục</td><td>🏆 Kỷ lục N (đã cập nhật nếu vừa phá)</td><td>Như màn Bắt đầu</td></tr>
             <tr><td>Nút Chơi lại</td><td>“Chơi lại”</td><td>Như nút Bắt đầu</td></tr>
-            <tr><td>Đếm tự về</td><td>“Tự về màn đầu sau N giây”</td><td><code>--text-xs</code> <code>--text-secondary</code></td></tr>
+            <tr><td>Đếm tự về</td><td>“Tự về màn đầu sau N giây”</td><td><code>--text-xs</code> <code>--text-secondary-strong</code></td></tr>
           </tbody>
         </table>
       </div>
@@ -309,7 +309,7 @@
           <tbody>
             <tr><td>Chuột hiện</td><td>Trượt lên từ hang</td><td>~80ms (tính trong thời gian hiện)</td></tr>
             <tr><td>Lỡ (hết thời gian hiện)</td><td>Thụt xuống hang</td><td>~80ms</td></tr>
-            <tr><td>Trúng</td><td>Đổi hình <code>mouse-hit</code> (mắt X, sao vàng, đầu dẹt), chữ “+1” <code>--color-success-500</code> bay lên 16px rồi mờ</td><td>200ms</td></tr>
+            <tr><td>Trúng</td><td>Đổi hình <code>mouse-hit</code> (mắt X, sao vàng, đầu dẹt), chữ “+1” <code>--color-success-600</code> bay lên 16px rồi mờ</td><td>200ms</td></tr>
             <tr><td>Trượt</td><td>Ô rung ngang ±4px, nền chớp <code>--color-danger-50</code>, viền <code>--color-danger-500</code></td><td>200ms</td></tr>
             <tr><td>Còn ≤ 5 giây</td><td>Số giây đổi đỏ, đập nhẹ mỗi giây</td><td>Mỗi giây</td></tr>
             <tr><td>Đếm 3-2-1</td><td>Mỗi số phóng từ 120% về 100% và mờ dần</td><td>1 giây / số</td></tr>
@@ -387,10 +387,10 @@
           <tbody>
             <tr><td>Nền trang</td><td><code>--bg-page</code></td></tr>
             <tr><td>Thanh thông tin, lớp phủ</td><td><code>--bg-brand-strong</code></td></tr>
-            <tr><td>Nút chính (Bắt đầu, Chơi lại)</td><td><code>--gradient-accent</code>, chữ <code>--text-on-brand</code></td></tr>
+            <tr><td>Nút chính (Bắt đầu, Chơi lại)</td><td><code>--gradient-accent-strong</code>, chữ <code>--text-on-brand</code></td></tr>
             <tr><td>Điểm lớn</td><td><code>--color-primary-500</code></td></tr>
             <tr><td>Kỷ lục</td><td><code>--color-accent-600</code>; nhãn Kỷ lục mới <code>--color-highlight-500</code></td></tr>
-            <tr><td>Trúng / Trượt / Hết giờ</td><td><code>--color-success-500</code> / <code>--color-danger-50</code> + <code>--color-danger-500</code> / <code>--color-danger-500</code></td></tr>
+            <tr><td>Trúng / Trượt / Hết giờ</td><td><code>--color-success-600</code> / <code>--color-danger-50</code> + <code>--color-danger-500</code> / <code>--color-danger-500</code></td></tr>
             <tr><td>Font</td><td><code>--font-sans</code> (Be Vietnam Pro)</td></tr>
             <tr><td>Bo góc</td><td>Ô <code>--radius-xl</code>, lưới/hộp <code>--radius-2xl</code>, nút <code>--radius-full</code></td></tr>
             <tr><td>Chuyển động</td><td><code>--duration-fast</code>, <code>--duration-base</code>, <code>--ease-standard</code></td></tr>

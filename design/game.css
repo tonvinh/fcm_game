@@ -51,7 +51,7 @@
   min-width: 200px;
   padding: 0 var(--space-10);
   border-radius: var(--radius-full);
-  background: var(--gradient-accent);
+  background: var(--gradient-accent-strong);
   color: var(--text-on-brand);
   font-size: var(--text-xl);
   line-height: var(--leading-xl);
@@ -122,7 +122,7 @@
   color: var(--color-primary-900);
   letter-spacing: -0.01em;
 }
-.start-rule { max-width: 300px; color: var(--text-secondary); text-wrap: balance; }
+.start-rule { max-width: 300px; color: var(--text-secondary-strong); text-wrap: balance; }
 
 /* ---------- MH-02 Đang chơi ---------- */
 .hud {
@@ -207,7 +207,7 @@
   font-size: var(--text-2xl);
   line-height: var(--leading-2xl);
   font-weight: var(--font-weight-extrabold);
-  color: var(--color-success-500);
+  color: var(--color-success-600);
   pointer-events: none;
   animation: plus-rise var(--duration-base) var(--ease-standard) forwards;
 }
@@ -262,7 +262,7 @@
 }
 .btn-dialog:focus-visible, .btn-dialog.is-focus { outline: none; box-shadow: var(--focus-ring); border-color: var(--border-focus); }
 .btn-cancel { background: var(--bg-surface); color: var(--text-primary); border-color: var(--border-default); }
-.btn-delete { background: var(--color-danger-500); color: var(--text-on-brand); }
+.btn-delete { background: var(--color-danger-600); color: var(--text-on-brand); }
 
 /* ---------- MH-03 Kết quả ---------- */
 .result { gap: clamp(8px, 2.4cqh, 16px); }
@@ -272,7 +272,7 @@
   font-weight: var(--font-weight-semibold);
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: var(--text-secondary);
+  color: var(--text-secondary-strong);
 }
 .badge-new {
   display: inline-flex;
@@ -295,7 +295,7 @@
   color: var(--color-primary-500);
   font-variant-numeric: tabular-nums;
 }
-.score span { color: var(--text-secondary); }
+.score span { color: var(--text-secondary-strong); }
 .stats {
   width: min(100%, 328px);
   display: grid;
@@ -309,7 +309,7 @@
   box-shadow: var(--shadow-sm);
   font-size: var(--text-xs);
   line-height: var(--leading-xs);
-  color: var(--text-secondary);
+  color: var(--text-secondary-strong);
 }
 .stats b {
   display: block;
@@ -320,7 +320,7 @@
   font-variant-numeric: tabular-nums;
 }
 .result .btn-play { margin-top: var(--space-2); }
-.auto-back { font-size: var(--text-xs); line-height: var(--leading-xs); color: var(--text-secondary); }
+.auto-back { font-size: var(--text-xs); line-height: var(--leading-xs); color: var(--text-secondary-strong); }
 
 /* ---------- Chuyển màn ---------- */
 .screen-enter { animation: fade-in var(--duration-base) var(--ease-standard); }

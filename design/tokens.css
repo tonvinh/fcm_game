@@ -23,6 +23,7 @@
   --color-accent-200: #ffeddb;
   --color-accent-500: #ff730a;
   --color-accent-600: #f75501;
+  --color-accent-700: #c94300;  /* đầu đậm của nút chính — chữ trắng đạt tương phản */
 
   /* Vàng (huy hiệu, ngôi sao, kỷ lục) */
   --color-highlight-500: #fbb83b;
@@ -30,8 +31,10 @@
   /* Trạng thái */
   --color-success-50:  #f1fdf6;
   --color-success-500: #17ba58;
+  --color-success-600: #0c7a39;  /* chữ xanh trên nền trắng */
   --color-danger-50:   #fff3f6;
   --color-danger-500:  #ff2156;
+  --color-danger-600:  #d90f43;  /* nền nút nguy hiểm có chữ trắng */
   --color-info-500:    #0073ff;
 
   /* Trung tính */
@@ -43,6 +46,7 @@
   --color-gray-300:   #d1d1d1;  /* viền ô nhập */
   --color-gray-500:   #888888;  /* chữ phụ */
   --color-gray-600:   #77878f;
+  --color-gray-700:   #666666;  /* chữ phụ cần đạt 4,5:1 */
   --color-gray-800:   #3d3d3d;  /* chữ chính */
   --color-gray-900:   #181d27;  /* tiêu đề đậm */
 
@@ -56,6 +60,7 @@
   --text-primary:     var(--color-gray-800);
   --text-heading:     var(--color-gray-900);
   --text-secondary:   var(--color-gray-500);
+  --text-secondary-strong: var(--color-gray-700);  /* chữ phụ cỡ nhỏ, đạt 4,5:1 trên nền trang và nền trắng */
   --text-on-brand:    var(--color-white);
   --text-link:        var(--color-primary-500);
   --border-subtle:    var(--color-gray-200);
@@ -66,6 +71,7 @@
   /* Gradient thương hiệu (banner, nút nổi bật) */
   --gradient-brand:  linear-gradient(135deg, #4564ed 0%, #2631cf 100%);
   --gradient-accent: linear-gradient(135deg, #ff730a 0%, #f75501 100%);
+  --gradient-accent-strong: linear-gradient(135deg, #f75501 0%, #c94300 100%);  /* nút có chữ trắng */
 
   /* ===== KIỂU CHỮ ===== */
   --font-sans: "Be Vietnam Pro", system-ui, -apple-system, BlinkMacSystemFont,
